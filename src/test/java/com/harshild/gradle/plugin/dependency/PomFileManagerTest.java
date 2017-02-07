@@ -1,5 +1,6 @@
 package com.harshild.gradle.plugin.dependency;
 
+import com.harshild.gradle.plugin.test.utility.GradleUtils;
 import org.gradle.api.Project;
 import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency;
 import org.gradle.api.plugins.JavaPlugin;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
+import java.io.StreamCorruptedException;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -39,53 +41,50 @@ public class PomFileManagerTest {
 
     @Before
     public void setup() throws IOException {
-        testProj = ProjectBuilder.builder()
-                .withName("TestProj")
-                .withProjectDir(testProjectDir.getRoot())
-                .build();
+        testProj = GradleUtils.buildProject("TestProj",testProjectDir);
 
         testProj.getPluginManager().apply(JavaPlugin.class);
         testProj.getRepositories().mavenCentral();
-        testProj.getConfigurations()
-                .getByName("compile")
-                .getDependencies()
-                .add(new DefaultExternalModuleDependency(ARTIFACT_3_GROUP, ARTIFACT_3_NAME, ARTIFACT_3_VERSION));
-        testProj.getConfigurations()
-                .getByName("compile")
-                .getDependencies()
-                .add(new DefaultExternalModuleDependency(ARTIFACT_1_GROUP, ARTIFACT_1_NAME, ARTIFACT_1_VERSION));
-        testProj.getConfigurations()
-                .getByName("compile")
-                .getDependencies()
-                .add(new DefaultExternalModuleDependency(ARTIFACT_2_GROUP, ARTIFACT_2_NAME, ARTIFACT_2_VERSION));
 
+        GradleUtils.addCompileDependency(testProj,ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
+        GradleUtils.addCompileDependency(testProj,ARTIFACT_2_GROUP,ARTIFACT_2_NAME,ARTIFACT_2_VERSION);
+        GradleUtils.addCompileDependency(testProj,ARTIFACT_3_GROUP,ARTIFACT_3_NAME,ARTIFACT_3_VERSION);
 
         pomFileManager = new PomFileManager(testProj);
-
     }
+
+
 
     @Test
     public void should_fetch_POMFile_location_forArtifact() throws IOException {
-        Map path = pomFileManager.getPomFileURL(ARTIFACT_3_NAME);
-        assertTrue(String.valueOf(path.get(ARTIFACT_3_NAME)).contains(ARTIFACT_3_NAME+"-"+ARTIFACT_3_VERSION +".pom"));
+        Map<String,String> path = pomFileManager.getPomFileURL(ARTIFACT_3_NAME);
+        assertTrue(path.get(ARTIFACT_3_NAME)
+                .contains(getPomfileName(ARTIFACT_3_NAME, ARTIFACT_3_VERSION)));
     }
 
     @Test
     public void should_fetch_Map_Of_POMFiles_forSelectedArtifacts() throws IOException {
-        Map paths = pomFileManager.getPomFileURL(ARTIFACT_3_NAME,ARTIFACT_1_NAME);
-        assertTrue(String.valueOf(paths.get(ARTIFACT_3_NAME)).contains(ARTIFACT_3_NAME+"-"+ARTIFACT_3_VERSION +".pom"));
-        assertTrue(String.valueOf(paths.get(ARTIFACT_1_NAME)).contains(ARTIFACT_1_NAME+"-"+ARTIFACT_1_VERSION+".pom"));
+        Map<String,String> paths = pomFileManager.getPomFileURL(ARTIFACT_3_NAME,ARTIFACT_1_NAME);
+        assertTrue(paths.get(ARTIFACT_3_NAME)
+                .contains(getPomfileName(ARTIFACT_3_NAME, ARTIFACT_3_VERSION)));
+        assertTrue(paths.get(ARTIFACT_1_NAME)
+                .contains(getPomfileName(ARTIFACT_1_NAME, ARTIFACT_1_VERSION)));
 
     }
 
     @Test
     public void should_fetch_Map_Of_POMFiles_forArtifacts() throws IOException {
-        Map paths = pomFileManager.getPomFileURL();
-        assertTrue(String.valueOf(paths.get(ARTIFACT_3_NAME)).contains(ARTIFACT_3_NAME+"-"+ARTIFACT_3_VERSION +".pom"));
-        assertTrue(String.valueOf(paths.get(ARTIFACT_2_NAME)).contains(ARTIFACT_2_NAME+"-"+ARTIFACT_2_VERSION +".pom"));
-        assertTrue(String.valueOf(paths.get(ARTIFACT_1_NAME)).contains(ARTIFACT_1_NAME+"-"+ARTIFACT_1_VERSION +".pom"));
-
+        Map<String,String> paths = pomFileManager.getPomFileURL();
+        assertTrue(paths.get(ARTIFACT_3_NAME)
+                .contains(getPomfileName(ARTIFACT_3_NAME, ARTIFACT_3_VERSION)));
+        assertTrue(paths.get(ARTIFACT_2_NAME)
+                .contains(getPomfileName(ARTIFACT_2_NAME, ARTIFACT_2_VERSION)));
+        assertTrue(paths.get(ARTIFACT_1_NAME)
+                .contains(getPomfileName(ARTIFACT_1_NAME, ARTIFACT_1_VERSION)));
     }
 
+    String getPomfileName(String artifactName,String artifactVersion){
+        return artifactName+"-"+artifactVersion +".pom";
+    }
 
 }

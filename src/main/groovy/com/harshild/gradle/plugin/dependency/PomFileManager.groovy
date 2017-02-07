@@ -17,7 +17,7 @@ class PomFileManager {
         this.project = project;
     }
 
-    def getPomFromArtifact = { Artifact artifact ->
+    def getPomFromArtifact = { ResolvedArtifact artifact ->
         def component = project.dependencies.createArtifactResolutionQuery()
                 .forComponents(artifact.id.componentIdentifier)
                 .withArtifacts(MavenModule, MavenPomArtifact)
@@ -27,13 +27,13 @@ class PomFileManager {
         return pomFile
     }
 
-    Map getPomFileURL(String ... dependencyNames) {
-        Map res = new HashMap();
+    Map<String,String> getPomFileURL(String ... dependencyNames) {
+        Map<String,String> result = new HashMap();
         project.configurations.compile.resolve();
-        project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each { ResolvedArtifact art ->
-            if (dependencyNames.length==0 || dependencyNames.contains(art.name))
-                res.put(art.name,getPomFromArtifact(art))
+        project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each { ResolvedArtifact resolvedArtifact ->
+            if (dependencyNames.length==0 || dependencyNames.contains(resolvedArtifact.name))
+                result.put(resolvedArtifact.name,getPomFromArtifact(resolvedArtifact))
         }
-        res
+        result
     }
 }

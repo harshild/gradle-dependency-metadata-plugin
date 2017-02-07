@@ -1,5 +1,8 @@
 package com.harshild.gradle.plugin.test.utility;
 
+import org.gradle.api.Project;
+import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency;
+import org.gradle.testfixtures.ProjectBuilder;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.junit.rules.TemporaryFolder;
@@ -33,4 +36,19 @@ public class GradleUtils {
             }
         }
     }
+
+    public static void addCompileDependency(Project project, String groupName, String artifactName, String artifactVersion) {
+        project.getConfigurations()
+                .getByName("compile")
+                .getDependencies()
+                .add(new DefaultExternalModuleDependency(groupName, artifactName, artifactVersion));
+    }
+
+    public static Project buildProject(String projectName,TemporaryFolder projectDir) {
+        return ProjectBuilder.builder()
+                .withName(projectName)
+                .withProjectDir(projectDir.getRoot())
+                .build();
+    }
+
 }
