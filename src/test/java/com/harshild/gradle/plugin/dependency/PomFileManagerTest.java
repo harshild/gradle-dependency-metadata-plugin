@@ -1,17 +1,14 @@
 package com.harshild.gradle.plugin.dependency;
 
-import com.harshild.gradle.plugin.test.utility.GradleUtils;
+import com.harshild.GradleTestHelper;
 import org.gradle.api.Project;
-import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
-import java.io.StreamCorruptedException;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -41,14 +38,14 @@ public class PomFileManagerTest {
 
     @Before
     public void setup() throws IOException {
-        testProj = GradleUtils.buildProject("TestProj",testProjectDir);
+        testProj = GradleTestHelper.buildProject("TestProj",testProjectDir);
 
         testProj.getPluginManager().apply(JavaPlugin.class);
         testProj.getRepositories().mavenCentral();
 
-        GradleUtils.addCompileDependency(testProj,ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
-        GradleUtils.addCompileDependency(testProj,ARTIFACT_2_GROUP,ARTIFACT_2_NAME,ARTIFACT_2_VERSION);
-        GradleUtils.addCompileDependency(testProj,ARTIFACT_3_GROUP,ARTIFACT_3_NAME,ARTIFACT_3_VERSION);
+        GradleTestHelper.addCompileDependency(testProj,ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
+        GradleTestHelper.addCompileDependency(testProj,ARTIFACT_2_GROUP,ARTIFACT_2_NAME,ARTIFACT_2_VERSION);
+        GradleTestHelper.addCompileDependency(testProj,ARTIFACT_3_GROUP,ARTIFACT_3_NAME,ARTIFACT_3_VERSION);
 
         pomFileManager = new PomFileManager(testProj);
     }

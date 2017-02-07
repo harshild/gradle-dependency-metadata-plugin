@@ -2,7 +2,7 @@ package com.harshild.gradle.plugin;
 
 import com.harshild.gradle.plugin.constants.CommandConstants;
 import com.harshild.gradle.plugin.task.MetadataReportGeneratorTask;
-import com.harshild.gradle.plugin.test.utility.GradleUtils;
+import com.harshild.GradleTestHelper;
 import org.gradle.testkit.runner.BuildResult;
 import org.junit.Before;
 import org.junit.Rule;
@@ -31,26 +31,26 @@ public class DependencyMetadataPluginTest {
         String buildFileContent = "plugins {" +
                 "    id 'com.harshild.dep-metadata'" +
                 "}";
-        GradleUtils.writeFile(buildFile, buildFileContent);
+        GradleTestHelper.writeFile(buildFile, buildFileContent);
     }
 
     @Test
     public void plugin_has_reportGeneratorTask() throws IOException {
-        BuildResult result = GradleUtils.executeBuild(testProjectDir,"tasks","--all");
+        BuildResult result = GradleTestHelper.executeBuild(testProjectDir,"tasks","--all");
         assertEquals(result.task(":tasks").getOutcome(), SUCCESS);
         assertTrue(result.getOutput().contains(CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT));
     }
 
     @Test
     public void plugin_canExecute_reportGeneratorTask() throws IOException {
-        BuildResult result = GradleUtils.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
+        BuildResult result = GradleTestHelper.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
         assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
         assertTrue(result.getOutput().contains(MetadataReportGeneratorTask.INFO_MESSAGE));
     }
 
     @Test
     public void plugin_shouldRun_build_before_reportGeneratorTask() throws IOException {
-        BuildResult result = GradleUtils.executeBuild(testProjectDir,CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
+        BuildResult result = GradleTestHelper.executeBuild(testProjectDir,CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
         assertEquals(result.task(":build").getOutcome(), SUCCESS);
     }
 

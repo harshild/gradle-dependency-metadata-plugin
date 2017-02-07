@@ -32,7 +32,7 @@ class PomFileManager {
         project.configurations.compile.resolve();
         project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each { ResolvedArtifact resolvedArtifact ->
             if (dependencyNames.length==0 || dependencyNames.contains(resolvedArtifact.name))
-                result.put(resolvedArtifact.name,getPomFromArtifact(resolvedArtifact))
+                result.put(resolvedArtifact.name,getPomFromArtifact(resolvedArtifact).path)
         }
         result
     }

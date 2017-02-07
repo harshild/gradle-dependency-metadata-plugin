@@ -1,4 +1,4 @@
-package com.harshild.gradle.plugin.test.utility;
+package com.harshild;
 
 import org.gradle.api.Project;
 import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency;
@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by harshild on 2/6/2017.
  */
-public class GradleUtils {
+public class GradleTestHelper {
     public static BuildResult executeBuild(TemporaryFolder testProjectDir, String... tasks) {
         return GradleRunner.create()
                 .withProjectDir(testProjectDir.getRoot())
