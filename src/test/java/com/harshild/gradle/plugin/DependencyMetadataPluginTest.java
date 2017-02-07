@@ -1,15 +1,15 @@
 package com.harshild.gradle.plugin;
 
+import com.harshild.gradle.plugin.constants.CommandConstants;
+import com.harshild.gradle.plugin.task.MetadataReportGeneratorTask;
+import com.harshild.gradle.plugin.test.utility.GradleUtils;
 import org.gradle.testkit.runner.BuildResult;
-import org.gradle.testkit.runner.GradleRunner;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * Created by W18NM36 on 2/6/2017.
+ * Created by harshild on 2/6/2017.
  */
 public class DependencyMetadataPluginTest {
     @Rule
@@ -31,46 +31,27 @@ public class DependencyMetadataPluginTest {
         String buildFileContent = "plugins {" +
                 "    id 'com.harshild.dep-metadata'" +
                 "}";
-        writeFile(buildFile, buildFileContent);
+        GradleUtils.writeFile(buildFile, buildFileContent);
     }
 
     @Test
-    public void DMPlugin_has_reportGeneratorTask() throws IOException {
-        BuildResult result = executeBuild("tasks","--all");
+    public void plugin_has_reportGeneratorTask() throws IOException {
+        BuildResult result = GradleUtils.executeBuild(testProjectDir,"tasks","--all");
         assertEquals(result.task(":tasks").getOutcome(), SUCCESS);
-        assertTrue(result.getOutput().contains("generateDependencyMetadataReport"));
+        assertTrue(result.getOutput().contains(CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT));
     }
 
     @Test
-    public void DMPlugin_canExecute_reportGeneratorTask() throws IOException {
-        BuildResult result = executeBuild("generateDependencyMetadataReport");
-        assertEquals(result.task(":generateDependencyMetadataReport").getOutcome(), SUCCESS);
+    public void plugin_canExecute_reportGeneratorTask() throws IOException {
+        BuildResult result = GradleUtils.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
+        assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
+        assertTrue(result.getOutput().contains(MetadataReportGeneratorTask.INFO_MESSAGE));
     }
 
     @Test
-    public void DMPlugin_shouldRun_Build_before_reportGeneratorTask() throws IOException {
-        BuildResult result = executeBuild("generateDependencyMetadataReport");
+    public void plugin_shouldRun_build_before_reportGeneratorTask() throws IOException {
+        BuildResult result = GradleUtils.executeBuild(testProjectDir,CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
         assertEquals(result.task(":build").getOutcome(), SUCCESS);
     }
 
-    private BuildResult executeBuild(String... tasks) {
-        return GradleRunner.create()
-                .withProjectDir(testProjectDir.getRoot())
-                .withArguments(tasks)
-                .forwardOutput()
-                .withPluginClasspath()
-                .build();
-    }
-
-    private void writeFile(File destination, String content) throws IOException {
-        BufferedWriter output = null;
-        try {
-            output = new BufferedWriter(new FileWriter(destination));
-            output.write(content);
-        } finally {
-            if (output != null) {
-                output.close();
-            }
-        }
-    }
 }
