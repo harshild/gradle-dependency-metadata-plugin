@@ -14,6 +14,7 @@ class DependencyManager {
     }
 
     Set<ResolvedArtifact> getResolvedArtifacts(String configuration){
+        project.configurations.compile.resolve();
         project.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts
     }
 }

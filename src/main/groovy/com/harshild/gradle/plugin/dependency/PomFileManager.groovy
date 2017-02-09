@@ -29,8 +29,8 @@ class PomFileManager {
 
     Map<String,String> getPomFileURL(String ... dependencyNames) {
         Map<String,String> result = new HashMap();
-        project.configurations.compile.resolve();
-        project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each { ResolvedArtifact resolvedArtifact ->
+
+        new DependencyManager(project).getResolvedArtifacts("compile").each { ResolvedArtifact resolvedArtifact ->
             if (dependencyNames.length==0 || dependencyNames.contains(resolvedArtifact.name))
                 result.put(resolvedArtifact.name,getPomFromArtifact(resolvedArtifact).path)
         }

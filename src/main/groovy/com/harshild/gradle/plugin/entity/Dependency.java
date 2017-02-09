@@ -6,8 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by harshild on 2/7/2017.
  */
-@XmlRootElement
-public class Project {
+public class Dependency {
     private String groupId;
     private String artifactId;
     private String name;
@@ -16,10 +15,10 @@ public class Project {
     private Licenses licenses;
     private String url;
 
-    public Project() {
+    public Dependency() {
     }
 
-    public Project(String groupId, String artifactId, String name, String version, String description, Licenses licenses, String url) {
+    public Dependency(String groupId, String artifactId, String name, String version, String description, Licenses licenses, String url) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.name = name;
@@ -84,7 +83,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" +
+        return "Dependency{" +
                 "groupId='" + groupId + '\'' +
                 ", artifactId='" + artifactId + '\'' +
                 ", name='" + name + '\'' +
@@ -101,9 +100,5 @@ public class Project {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public Dependency toDependency(){
-        return new Dependency(this.groupId,this.artifactId,this.name,this.version,this.description,this.licenses,this.url) ;
     }
 }
