@@ -1,0 +1,36 @@
+apply plugin: 'maven-publish'
+
+def GITHUB_URL_ROOT = 'https://github.com/harshild/gradle-dep-metadata-plugin'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact groovydocJar
+            artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('name', 'Gradle Dependency Metadata plugin')
+                root.appendNode('description', 'Gradle plugin for finding details about dependency')
+                root.appendNode('url', GITHUB_URL_ROOT)
+                root.appendNode('inceptionYear', '2017')
+
+                def scm = root.appendNode('scm')
+                scm.appendNode('url', GITHUB_URL_ROOT)
+
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'The Apache Software License, Version 2.0')
+                license.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
+                license.appendNode('distribution', 'repo')
+
+                def developers = root.appendNode('developers')
+                def harshild = developers.appendNode('developer')
+                harshild.appendNode('id', 'harshild')
+                harshild.appendNode('name', 'Harshil Dhariwal')
+                harshild.appendNode('email', 'harshil.dhariwal@gmail.com')
+            }
+        }
+    }
+}
