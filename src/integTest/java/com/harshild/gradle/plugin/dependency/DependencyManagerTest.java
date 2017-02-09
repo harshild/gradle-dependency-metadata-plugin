@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by harshild on 2/7/2017.

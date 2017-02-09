@@ -1,8 +1,8 @@
 package com.harshild.gradle.plugin;
 
+import com.harshild.GradleTestHelper;
 import com.harshild.gradle.plugin.constants.CommandConstants;
 import com.harshild.gradle.plugin.task.MetadataReportGeneratorTask;
-import com.harshild.GradleTestHelper;
 import org.gradle.testkit.runner.BuildResult;
 import org.junit.Before;
 import org.junit.Rule;

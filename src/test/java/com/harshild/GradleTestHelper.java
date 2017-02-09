@@ -7,10 +7,8 @@ import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  * Created by harshild on 2/6/2017.
@@ -51,4 +49,13 @@ public class GradleTestHelper {
                 .build();
     }
 
+    public static boolean fileContains(File file,String charSequence) throws FileNotFoundException {
+        final Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            final String lineFromFile = scanner.nextLine();
+            if(lineFromFile.contains(charSequence))
+                return true;
+        }
+        return false;
+    }
 }
