@@ -30,7 +30,7 @@ public class DependencyMetadataPluginTest {
     public void setup() throws IOException {
         buildFile = testProjectDir.newFile("build.gradle");
         buildFileContent = "plugins {" +
-                "    id 'com.harshild.dep-metadata'" +
+                "    id 'com.harshild.dependency-metadata'" +
                 "}";
         GradleTestHelper.writeFile(buildFile, buildFileContent);
     }
