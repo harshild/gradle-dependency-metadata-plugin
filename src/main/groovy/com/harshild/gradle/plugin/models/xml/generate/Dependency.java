@@ -1,35 +1,36 @@
-package com.harshild.gradle.plugin.entity;
+package com.harshild.gradle.plugin.models.xml.generate;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Arrays;
 
 /**
- * Created by harshild on 2/7/2017.
+ * Created by harshild on 2/10/2017.
  */
-@XmlRootElement
-public class Project {
+
+public class Dependency {
     private String groupId;
     private String artifactId;
     private String name;
     private String version;
     private String description;
-    private Licenses licenses;
+    private DependencyLicenses dependencyLicenses;
     private String url;
 
-    public Project() {
+    public Dependency() {
     }
 
-    public Project(String groupId, String artifactId, String name, String version, String description, Licenses licenses, String url) {
+    public Dependency(String groupId, String artifactId, String name, String version, String description, DependencyLicenses dependencyLicenses, String url) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.name = name;
         this.version = version;
         this.description = description;
-        this.licenses = licenses;
+        this.dependencyLicenses = dependencyLicenses;
         this.url = url;
     }
 
-    @XmlElement
+    @XmlAttribute
     public String getGroupId() {
         return groupId;
     }
@@ -38,7 +39,7 @@ public class Project {
         this.groupId = groupId;
     }
 
-    @XmlElement
+    @XmlAttribute
     public String getArtifactId() {
         return artifactId;
     }
@@ -47,7 +48,7 @@ public class Project {
         this.artifactId = artifactId;
     }
 
-    @XmlElement
+    @XmlAttribute
     public String getName() {
         return name;
     }
@@ -65,7 +66,7 @@ public class Project {
         this.description = description;
     }
 
-    @XmlElement
+    @XmlAttribute
     public String getUrl() {
         return url;
     }
@@ -73,28 +74,28 @@ public class Project {
     void setUrl(String url) {
         this.url = url;
     }
-    @XmlElement
-    public Licenses getLicenses() {
-        return licenses;
+    @XmlElement(name = "licenses")
+    public DependencyLicenses getDependencyLicenses() {
+        return dependencyLicenses;
     }
-    void setLicenses(Licenses licenses) {
-        this.licenses = licenses;
+    void setDependencyLicenses(DependencyLicenses dependencyLicenses) {
+        this.dependencyLicenses = dependencyLicenses;
     }
 
 
     @Override
     public String toString() {
-        return "Project{" +
+        return "Dependency{" +
                 "groupId='" + groupId + '\'' +
                 ", artifactId='" + artifactId + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", licenses=" + licenses +
+                ", dependencyLicenses=" + dependencyLicenses +
                 ", url='" + url + '\'' +
                 '}';
     }
 
-    @XmlElement
+    @XmlAttribute
     public String getVersion() {
         return version;
     }
@@ -102,8 +103,12 @@ public class Project {
     public void setVersion(String version) {
         this.version = version;
     }
+    public static DependencyLicenses createLicenses(DependencyLicense... dependencyLicense){
+        return new DependencyLicenses(Arrays.asList(dependencyLicense));
+    }
 
-    public Dependency toDependency(){
-        return new Dependency(this.groupId,this.artifactId,this.name,this.version,this.description,this.licenses,this.url) ;
+    public static DependencyLicense createLicense(String name, String url){
+        return new DependencyLicense(name,url);
     }
 }
+

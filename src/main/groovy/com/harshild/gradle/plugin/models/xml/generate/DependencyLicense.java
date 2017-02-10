@@ -1,25 +1,25 @@
-package com.harshild.gradle.plugin.entity;
+package com.harshild.gradle.plugin.models.xml.generate;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * Created by harshild on 2/7/2017.
+ * Created by harshild on 2/10/2017.
  */
-public class License
+public class DependencyLicense
 {
     private String name;
 
     private String url;
 
-    public License() {
+    public DependencyLicense() {
     }
 
-    public License(String name, String url) {
+    public DependencyLicense(String name, String url) {
         this.name = name;
         this.url = url;
     }
 
-    @XmlElement
+    @XmlAttribute
     public String getName ()
     {
         return name;
@@ -30,7 +30,7 @@ public class License
         this.name = name;
     }
 
-    @XmlElement
+    @XmlAttribute
     public String getUrl ()
     {
         return url;
@@ -43,7 +43,7 @@ public class License
 
     @Override
     public String toString() {
-        return "License{" +
+        return "ProjectLicense{" +
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 '}';

@@ -1,6 +1,5 @@
 package com.harshild.gradle.plugin.xml.parser
 
-import com.harshild.gradle.plugin.entity.Project
 import org.xml.sax.InputSource
 import org.xml.sax.XMLReader
 import org.xml.sax.helpers.XMLFilterImpl

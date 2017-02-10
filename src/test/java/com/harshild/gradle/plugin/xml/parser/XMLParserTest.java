@@ -1,7 +1,7 @@
 package com.harshild.gradle.plugin.xml.parser;
 
 import com.harshild.GradleTestHelper;
-import com.harshild.gradle.plugin.entity.Project;
+import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject;
 import com.harshild.gradle.plugin.xml.parser.XMLParser;
 import org.junit.Before;
 import org.junit.Rule;
@@ -67,13 +67,13 @@ public class XMLParserTest {
 
         GradleTestHelper.writeFile(xmlFile,fileContent);
 
-        Project project = new XMLParser<Project>()
-                .parseXML(xmlFile,Project.class);
+        XmlRootProject xmlRootProject = new XMLParser<XmlRootProject>()
+                .parseXML(xmlFile,XmlRootProject.class);
 
-        assertFalse(project==null);
-        assertEquals("junit",project.getGroupId());
-        assertEquals("junit",project.getArtifactId());
-        assertEquals("4.12",project.getVersion());
+        assertFalse(xmlRootProject ==null);
+        assertEquals("junit", xmlRootProject.getGroupId());
+        assertEquals("junit", xmlRootProject.getArtifactId());
+        assertEquals("4.12", xmlRootProject.getVersion());
 
     }
 
@@ -81,13 +81,13 @@ public class XMLParserTest {
     public void itShouldBeAbleToParseXMLAndIgnoreNamespace() throws Exception {
         GradleTestHelper.writeFile(xmlFile,fileContentWithNamespace);
 
-        Project project = new XMLParser<Project>()
-                .parseXML(xmlFile,Project.class);
+        XmlRootProject xmlRootProject = new XMLParser<XmlRootProject>()
+                .parseXML(xmlFile,XmlRootProject.class);
 
-        assertFalse(project==null);
-        assertEquals("junit",project.getGroupId());
-        assertEquals("junit",project.getArtifactId());
-        assertEquals("4.12",project.getVersion());
+        assertFalse(xmlRootProject ==null);
+        assertEquals("junit", xmlRootProject.getGroupId());
+        assertEquals("junit", xmlRootProject.getArtifactId());
+        assertEquals("4.12", xmlRootProject.getVersion());
 
     }
 
@@ -102,17 +102,17 @@ public class XMLParserTest {
 
 
 
-        List<Project> projectList = new XMLParser<Project>()
-                .parseXMLs(map,Project.class);
+        List<XmlRootProject> xmlRootProjectList = new XMLParser<XmlRootProject>()
+                .parseXMLs(map,XmlRootProject.class);
 
-        assertTrue(projectList.size() == 2);
-        assertEquals("junit",projectList.get(0).getGroupId());
-        assertEquals("junit",projectList.get(0).getArtifactId());
-        assertEquals("4.12",projectList.get(0).getVersion());
+        assertTrue(xmlRootProjectList.size() == 2);
+        assertEquals("junit", xmlRootProjectList.get(0).getGroupId());
+        assertEquals("junit", xmlRootProjectList.get(0).getArtifactId());
+        assertEquals("4.12", xmlRootProjectList.get(0).getVersion());
 
-        assertEquals("junit_test",projectList.get(1).getGroupId());
-        assertEquals("junit_test",projectList.get(1).getArtifactId());
-        assertEquals("4.12",projectList.get(1).getVersion());
+        assertEquals("junit_test", xmlRootProjectList.get(1).getGroupId());
+        assertEquals("junit_test", xmlRootProjectList.get(1).getArtifactId());
+        assertEquals("4.12", xmlRootProjectList.get(1).getVersion());
 
     }
 }

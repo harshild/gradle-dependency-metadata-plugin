@@ -1,30 +1,33 @@
-package com.harshild.gradle.plugin.entity;
+package com.harshild.gradle.plugin.models.xml.parse;
+
+
+import com.harshild.gradle.plugin.models.xml.generate.Dependency;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Created by harshild on 2/7/2017.
  */
-public class Dependency {
+@XmlRootElement(name = "project")
+public class XmlRootProject {
     private String groupId;
     private String artifactId;
     private String name;
     private String version;
     private String description;
-    private Licenses licenses;
+    private ProjectLicenses projectLicenses;
     private String url;
 
-    public Dependency() {
+    public XmlRootProject() {
     }
 
-    public Dependency(String groupId, String artifactId, String name, String version, String description, Licenses licenses, String url) {
+    public XmlRootProject(String groupId, String artifactId, String name, String version, String description, ProjectLicenses projectLicenses, String url) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.name = name;
         this.version = version;
         this.description = description;
-        this.licenses = licenses;
+        this.projectLicenses = projectLicenses;
         this.url = url;
     }
 
@@ -72,23 +75,23 @@ public class Dependency {
     void setUrl(String url) {
         this.url = url;
     }
-    @XmlElement
-    public Licenses getLicenses() {
-        return licenses;
+    @XmlElement(name = "licenses")
+    public ProjectLicenses getProjectLicenses() {
+        return projectLicenses;
     }
-    void setLicenses(Licenses licenses) {
-        this.licenses = licenses;
+    void setProjectLicenses(ProjectLicenses projectLicenses) {
+        this.projectLicenses = projectLicenses;
     }
 
 
     @Override
     public String toString() {
-        return "Dependency{" +
+        return "XmlRootProject{" +
                 "groupId='" + groupId + '\'' +
                 ", artifactId='" + artifactId + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", licenses=" + licenses +
+                ", projectLicenses=" + projectLicenses +
                 ", url='" + url + '\'' +
                 '}';
     }
@@ -102,3 +105,4 @@ public class Dependency {
         this.version = version;
     }
 }
+

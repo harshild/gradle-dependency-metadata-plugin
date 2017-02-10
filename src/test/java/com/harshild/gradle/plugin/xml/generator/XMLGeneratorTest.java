@@ -1,9 +1,9 @@
 package com.harshild.gradle.plugin.xml.generator;
 
 import com.harshild.GradleTestHelper;
-import com.harshild.gradle.plugin.entity.License;
-import com.harshild.gradle.plugin.entity.Licenses;
-import com.harshild.gradle.plugin.entity.Project;
+import com.harshild.gradle.plugin.models.xml.parse.ProjectLicense;
+import com.harshild.gradle.plugin.models.xml.parse.ProjectLicenses;
+import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,22 +22,23 @@ public class XMLGeneratorTest {
     @Rule
     public final TemporaryFolder testResourceDir = new TemporaryFolder();
     private File xmlFile;
-    private Project project;
-    private XMLGenerator<Project> projectXMLGenerator;
+    private XmlRootProject xmlRootProject;
+    private XMLGenerator<XmlRootProject> projectXMLGenerator;
 
 
     @Before
     public void setUp() throws IOException {
         xmlFile = testResourceDir.newFile("test.xml");
 
-        project = new Project("group",
+        xmlRootProject = new XmlRootProject("group",
                 "artifact",
                 "Test",
                 "version",
                 "description",
-                new Licenses(Arrays.asList(
-                        new License("Apache 2.0","http://URL"),
-                        new License("BSD","http://TheURL"))),
+                new ProjectLicenses(Arrays.asList(
+                        new ProjectLicense("",""),
+                        new ProjectLicense("","")
+                )),
                 "http://testUrl");
 
         projectXMLGenerator = new XMLGenerator<>();
@@ -46,7 +47,7 @@ public class XMLGeneratorTest {
 
     @Test
     public void itShouldGenerateXMLForTheXMLEntity() throws Exception {
-        projectXMLGenerator.generateXML(project,xmlFile);
+        projectXMLGenerator.generateXML(xmlRootProject,xmlFile);
         assertTrue(xmlFile.exists());
         assertTrue(GradleTestHelper.fileContains(xmlFile,"<project>"));
     }
