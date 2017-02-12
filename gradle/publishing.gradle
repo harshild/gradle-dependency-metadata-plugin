@@ -6,9 +6,6 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact sourcesJar
-            artifact groovydocJar
-            artifact javadocJar
 
             pom.withXml {
                 def root = asNode()
@@ -21,8 +18,8 @@ publishing {
                 scm.appendNode('url', GITHUB_URL_ROOT)
 
                 def license = root.appendNode('licenses').appendNode('license')
-                license.appendNode('name', 'The Apache Software ProjectLicense, Version 2.0')
-                license.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
+                license.appendNode('name', 'MIT')
+                license.appendNode('url', GITHUB_URL_ROOT+'/LICENSE')
                 license.appendNode('distribution', 'repo')
 
                 def developers = root.appendNode('developers')
