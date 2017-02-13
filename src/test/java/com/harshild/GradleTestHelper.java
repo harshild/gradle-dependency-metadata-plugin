@@ -2,6 +2,7 @@ package com.harshild;
 
 import org.gradle.api.Project;
 import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
@@ -35,6 +36,11 @@ public class GradleTestHelper {
         }
     }
 
+    public static boolean makeDir(String path){
+        File dir = new File(path);
+        return dir.mkdir();
+    }
+
     public static void addCompileDependency(Project project, String groupName, String artifactName, String artifactVersion) {
         project.getConfigurations()
                 .getByName("compile")
@@ -42,10 +48,18 @@ public class GradleTestHelper {
                 .add(new DefaultExternalModuleDependency(groupName, artifactName, artifactVersion));
     }
 
-    public static Project buildProject(String projectName,TemporaryFolder projectDir) {
+    public static Project addSubProject(Project rootProject, String projectName) {
         return ProjectBuilder.builder()
                 .withName(projectName)
-                .withProjectDir(projectDir.getRoot())
+                .withParent(rootProject)
+                .build();
+
+    }
+
+    public static Project buildProject(String projectName, File projectDir) {
+        return ProjectBuilder.builder()
+                .withName(projectName)
+                .withProjectDir(projectDir)
                 .build();
     }
 
@@ -57,5 +71,10 @@ public class GradleTestHelper {
                 return true;
         }
         return false;
+    }
+
+    public static void addJavaMavenBehaviour(Project project) {
+        project.getPluginManager().apply(JavaPlugin.class);
+        project.getRepositories().mavenCentral();
     }
 }

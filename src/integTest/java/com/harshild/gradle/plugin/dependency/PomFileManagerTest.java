@@ -2,7 +2,6 @@ package com.harshild.gradle.plugin.dependency;
 
 import com.harshild.GradleTestHelper;
 import org.gradle.api.Project;
-import org.gradle.api.plugins.JavaPlugin;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,10 +36,9 @@ public class PomFileManagerTest {
 
     @Before
     public void setup() throws IOException {
-        testProj = GradleTestHelper.buildProject("TestProj",testProjectDir);
+        testProj = GradleTestHelper.buildProject("TestProj",testProjectDir.getRoot());
 
-        testProj.getPluginManager().apply(JavaPlugin.class);
-        testProj.getRepositories().mavenCentral();
+        GradleTestHelper.addJavaMavenBehaviour(testProj);
 
         GradleTestHelper.addCompileDependency(testProj,ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
         GradleTestHelper.addCompileDependency(testProj,ARTIFACT_2_GROUP,ARTIFACT_2_NAME,ARTIFACT_2_VERSION);

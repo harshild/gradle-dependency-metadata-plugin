@@ -14,7 +14,14 @@ class DependencyManager {
     }
 
     Set<ResolvedArtifact> getResolvedArtifacts(String configuration){
-        project.configurations.compile.resolve();
-        project.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts
+        Set<ResolvedArtifact> artifactSet = new HashSet<>()
+        project.configurations.compile.resolve()
+        project.allprojects.each { sub->
+            artifactSet.addAll(sub.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
+        }
+
+        artifactSet.addAll(project.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
+
+        artifactSet
     }
 }

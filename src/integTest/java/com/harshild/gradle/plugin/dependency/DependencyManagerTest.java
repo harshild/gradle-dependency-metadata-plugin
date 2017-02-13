@@ -3,7 +3,6 @@ package com.harshild.gradle.plugin.dependency;
 import com.harshild.GradleTestHelper;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ResolvedArtifact;
-import org.gradle.api.plugins.JavaPlugin;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,15 +32,16 @@ public class DependencyManagerTest {
 
     @Rule
     public final TemporaryFolder testProjectDir = new TemporaryFolder();
+
     Project testProject;
+    Project testProject1;
     DependencyManager dependencyManager;
 
     @Before
     public void setup() throws IOException {
-        testProject = GradleTestHelper.buildProject("TestProj",testProjectDir);
+        testProject = GradleTestHelper.buildProject("TestProj",testProjectDir.getRoot());
 
-        testProject.getPluginManager().apply(JavaPlugin.class);
-        testProject.getRepositories().mavenCentral();
+        GradleTestHelper.addJavaMavenBehaviour(testProject);
 
         GradleTestHelper.addCompileDependency(testProject,ARTIFACT_2_GROUP,ARTIFACT_2_NAME,ARTIFACT_2_VERSION);
         GradleTestHelper.addCompileDependency(testProject,ARTIFACT_3_GROUP,ARTIFACT_3_NAME,ARTIFACT_3_VERSION);
@@ -62,6 +62,16 @@ public class DependencyManagerTest {
 
         Set<ResolvedArtifact> articafts = dependencyManager.getResolvedArtifacts("compile");
         assertEquals(4,articafts.size());
+    }
+
+    @Test
+    public void itShouldReturnASetOfResolvedDependenciesForSubProjectsAlso() throws Exception {
+        testProject1 = GradleTestHelper.addSubProject(testProject,"TestSub");
+        GradleTestHelper.addJavaMavenBehaviour(testProject1);
+
+        GradleTestHelper.addCompileDependency(testProject1,ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
+        Set<ResolvedArtifact> resolvedArtifacts = dependencyManager.getResolvedArtifacts("compile");
+        assertEquals(4,resolvedArtifacts.size());
     }
 
 }
