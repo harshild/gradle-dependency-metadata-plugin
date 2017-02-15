@@ -11,6 +11,8 @@ class XMLGenerator<T> {
         JAXBContext jaxbContext=JAXBContext.newInstance(t.class)
         Marshaller marshaller=jaxbContext.createMarshaller()
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true)
-        marshaller.marshal(t, new FileOutputStream(file))
+        def fileWrite = new FileOutputStream(file)
+        marshaller.marshal(t, fileWrite)
+        fileWrite.close()
     }
 }

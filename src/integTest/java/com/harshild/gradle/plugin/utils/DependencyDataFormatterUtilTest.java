@@ -44,6 +44,34 @@ public class DependencyDataFormatterUtilTest {
         assertTrue(DependencyDataFormatterUtil.projectHasParent(projectWithParent));
 
     }
+
+    @Test
+    public void itShouldTryToTakeDetailsFromParentIfNotPresent_1() throws Exception {
+        testProj = GradleTestHelper.buildProject("TestProj",testProjectDir.getRoot());
+
+        GradleTestHelper.addJavaMavenBehaviour(testProj);
+
+        XmlRootProject projectWithParent =  new XmlRootProject("com.fasterxml.jackson.core",
+                "jackson-core",
+                "Test",
+                "2.8.5",
+                "description",
+                null,
+                "http://testUrl",
+                new ProjectParent("com.fasterxml.jackson","jackson-parent","2.8"));
+
+        List<XmlRootProject> xmlRootProjectList = new ArrayList<>();
+        xmlRootProjectList.add(projectWithParent);
+
+        List<XmlRootProject> newXmlRootProjectList = DependencyDataFormatterUtil.format(testProj,xmlRootProjectList);
+        assertEquals(1,newXmlRootProjectList.size());
+
+        XmlRootProject xmlRootProject = newXmlRootProjectList.get(0);
+        assertTrue(xmlRootProject.getProjectLicenses()!=null);
+        assertEquals(1,xmlRootProject.getProjectLicenses().getProjectLicense().size());
+        assertEquals("The Apache Software License, Version 2.0",xmlRootProject.getProjectLicenses().getProjectLicense().get(0).getName());
+    }
+
     @Test
     public void itShouldTryToTakeDetailsFromParentIfNotPresent() throws Exception {
         testProj = GradleTestHelper.buildProject("TestProj",testProjectDir.getRoot());
