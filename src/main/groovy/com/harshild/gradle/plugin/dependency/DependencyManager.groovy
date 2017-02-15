@@ -15,13 +15,24 @@ class DependencyManager {
 
     Set<ResolvedArtifact> getResolvedArtifacts(String configuration){
         Set<ResolvedArtifact> artifactSet = new HashSet<>()
-        project.configurations.compile.resolve()
+        project.configurations.getByName(configuration).resolve()
         project.allprojects.each { sub->
-            artifactSet.addAll(sub.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
+            if(isConfigurationAvailable(project,configuration))
+                artifactSet.addAll(sub.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
         }
 
-        artifactSet.addAll(project.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
+        if(isConfigurationAvailable(project,configuration))
+            artifactSet.addAll(project.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
 
         artifactSet
+    }
+
+    private def boolean isConfigurationAvailable(Project project,String configuration) {
+        try{
+            project.configurations.getByName(configuration)
+            return true
+        }catch(Exception ignored){
+            return false
+        }
     }
 }

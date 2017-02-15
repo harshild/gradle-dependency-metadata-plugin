@@ -1,8 +1,8 @@
 package com.harshild.gradle.plugin.xml.parser;
 
 import com.harshild.GradleTestHelper;
+import com.harshild.gradle.plugin.models.xml.parse.ProjectParent;
 import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject;
-import com.harshild.gradle.plugin.xml.parser.XMLParser;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,6 +28,7 @@ public class XMLParserTest {
     String fileContent;
     String fileContentWithNamespace;
     String fileContentWithNamespace2;
+    private String fileContentWithParent;
 
 
     @Before
@@ -56,6 +57,19 @@ public class XMLParserTest {
                 "\n" +
                 "    <groupId>junit_test</groupId>\n" +
                 "    <artifactId>junit_test</artifactId>\n" +
+                "    <version>4.12</version>"+
+                "</project>";
+
+        fileContentWithParent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n" +
+                "<parent>\n" +
+                "   <groupId>com.fasterxml.jackson</groupId>\n" +
+                "   <artifactId>jackson-parent</artifactId>\n" +
+                "   <version>2.8</version>\n" +
+                "</parent>"+
+                "\n" +
+                "    <groupId>com.fasterxml.jackson.core</groupId>\n" +
+                "    <artifactId>jackson-core</artifactId>\n" +
                 "    <version>4.12</version>"+
                 "</project>";
 
@@ -115,4 +129,23 @@ public class XMLParserTest {
         assertEquals("4.12", xmlRootProjectList.get(1).getVersion());
 
     }
+
+    @Test
+    public void itShouldFetchDetailsForParent() throws Exception {
+        GradleTestHelper.writeFile(xmlFile,fileContentWithParent);
+        Map<String,String> map = new HashMap<>();
+        map.put("1",xmlFile.getAbsolutePath());
+
+        List<XmlRootProject> xmlRootProjectList = new XMLParser<XmlRootProject>()
+                .parseXMLs(map,XmlRootProject.class);
+
+        assertTrue(xmlRootProjectList.size() == 1);
+
+        ProjectParent parent = xmlRootProjectList.get(0).getProjectParent();
+        assertTrue(parent!=null);
+        assertEquals("jackson-parent",parent.getArtifactId());
+
+    }
+
+
 }

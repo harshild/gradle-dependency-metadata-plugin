@@ -1,9 +1,9 @@
 package com.harshild.gradle.plugin.dependency
 
-import groovy.util.slurpersupport.GPathResult
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedArtifact
-import org.gradle.api.component.Artifact
+import org.gradle.api.artifacts.component.ComponentIdentifier
+import org.gradle.internal.component.external.model.DefaultModuleComponentIdentifier
 import org.gradle.maven.MavenModule
 import org.gradle.maven.MavenPomArtifact
 
@@ -12,25 +12,38 @@ import org.gradle.maven.MavenPomArtifact
  */
 class PomFileManager {
     Project project
+    DependencyManager dependencyManager
+
+    PomFileManager() {
+    }
 
     def PomFileManager(Project project){
-        this.project = project;
+        this.project = project
+        dependencyManager = new DependencyManager(project)
     }
 
     def getPomFromArtifact = { ResolvedArtifact artifact ->
+        return getPom(artifact.id.componentIdentifier)
+    }
+
+    def File getPomForDependency(String groupId, String artifactId, String version)  {
+        getPom(new DefaultModuleComponentIdentifier(groupId,artifactId,version))
+    }
+
+    def File getPom(ComponentIdentifier componentIdentifier) {
         def component = project.dependencies.createArtifactResolutionQuery()
-                .forComponents(artifact.id.componentIdentifier)
+                .forComponents(componentIdentifier)
                 .withArtifacts(MavenModule, MavenPomArtifact)
                 .execute()
                 .resolvedComponents[0]
-        def pomFile= component.getArtifacts(MavenPomArtifact)[0].file
+        def pomFile = component.getArtifacts(MavenPomArtifact)[0].file
         return pomFile
     }
 
     Map<String,String> getPomFileURL(String ... dependencyNames) {
-        Map<String,String> result = new HashMap();
+        Map<String,String> result = new HashMap()
 
-        new DependencyManager(project).getResolvedArtifacts("compile").each { ResolvedArtifact resolvedArtifact ->
+        dependencyManager.getResolvedArtifacts("compile").each { ResolvedArtifact resolvedArtifact ->
             if (dependencyNames.length==0 || dependencyNames.contains(resolvedArtifact.name))
                 result.put(resolvedArtifact.name,getPomFromArtifact(resolvedArtifact).path)
         }

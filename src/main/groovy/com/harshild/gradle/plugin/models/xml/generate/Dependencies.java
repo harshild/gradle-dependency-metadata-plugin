@@ -1,9 +1,7 @@
 package com.harshild.gradle.plugin.models.xml.generate;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,10 +16,6 @@ public class Dependencies {
 
     public Dependencies(List<Dependency> dependency) {
         this.dependency = dependency;
-    }
-
-    public static Dependency addDependency() {
-        return null;
     }
 
     @XmlElement

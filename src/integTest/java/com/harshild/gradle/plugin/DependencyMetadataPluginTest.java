@@ -89,6 +89,27 @@ public class DependencyMetadataPluginTest {
     }
 
     @Test
+    public void plugin_shouldFetchDetailsFromParentIfAvailable() throws IOException {
+        String compileDep = buildFileContent + "\n"+
+                "apply plugin: 'java'\n\n"
+                +"repositories {\n" +
+                "    mavenCentral()\n" +
+                "}\n"+
+                "dependencies {\n" +
+                "    compile 'com.fasterxml.jackson.core:jackson-core:2.8.5'\n" +
+                "}";
+        GradleTestHelper.writeFile(buildFile, compileDep);
+
+        BuildResult result = GradleTestHelper.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
+        assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
+        assertTrue(result.getOutput().contains(MetadataReportGeneratorTask.INFO_MESSAGE));
+        File outputFile = new File(testProjectDir.getRoot().getAbsolutePath() + "/build/reports/dependency-metadata.xml");
+        assertTrue(outputFile.exists());
+        assertTrue(GradleTestHelper.fileContains(outputFile,"The Apache Software License, Version 2.0"));
+    }
+
+
+    @Test
     public void plugin_shouldRun_build_before_reportGeneratorTask() throws IOException {
         BuildResult result = GradleTestHelper.executeBuild(testProjectDir,CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
         assertEquals(result.task(":build").getOutcome(), SUCCESS);

@@ -21,7 +21,7 @@ class Marshaller {
     }
 
     static Dependencies marshall(XmlRootProject... project) {
-        List<Dependency> dependencyList = new ArrayList<>();
+        List<Dependency> dependencyList = new ArrayList<>()
         project.each {
             dependencyList.add(marshall(it))
         }
@@ -29,7 +29,7 @@ class Marshaller {
     }
 
     static Dependencies marshall(List<XmlRootProject> project) {
-        List<Dependency> dependencyList = new ArrayList<>();
+        List<Dependency> dependencyList = new ArrayList<>()
         project.each {
             dependencyList.add(marshall(it))
         }
