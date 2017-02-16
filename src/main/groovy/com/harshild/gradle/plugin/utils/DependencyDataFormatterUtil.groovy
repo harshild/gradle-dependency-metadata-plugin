@@ -13,31 +13,38 @@ import org.gradle.api.Project
 class DependencyDataFormatterUtil {
     static List<XmlRootProject> format(Project project, List<XmlRootProject> xmlRootProjects) {
 
-        xmlRootProjects.each {
-            if(projectHasParent(it)){
-                def parent = it.projectParent
-                def parentPom = new PomFileManager(project).getPomForDependency(parent.groupId,parent.artifactId,parent.version)
-                def parentProject = new XMLParser<XmlRootProject>().parseXML(parentPom,XmlRootProject.class)
+        xmlRootProjects.each {XmlRootProject rootProject ->
+            syncDetailsFromParent(project,rootProject)
+        }
+    }
 
-                it.groupId = it.groupId!=""&& it.groupId!=null ? it.groupId :  parentProject.groupId
-                it.version = it.version!=""&& it.version!=null ? it.version :  parentProject.version
+    def static XmlRootProject syncDetailsFromParent(Project project,XmlRootProject rootProject) {
+        if (projectHasParent(rootProject)) {
+            def parent = rootProject.projectParent
+            def parentPom = new PomFileManager(project).getPomForDependency(parent.groupId, parent.artifactId, parent.version)
+            def parentProject = new XMLParser<XmlRootProject>().parseXML(parentPom, XmlRootProject.class)
 
-                it.projectLicenses = it.projectLicenses!=null ? it.projectLicenses :  new ProjectLicenses()
-                it.projectLicenses.projectLicense = it.projectLicenses.projectLicense!=null && it.projectLicenses.projectLicense.size() != 0 ?
-                        it.projectLicenses.projectLicense :  new ArrayList<>()
+            parentProject = syncDetailsFromParent(project,parentProject)
 
-                if(parentProject.projectLicenses!= null && parentProject.projectLicenses.projectLicense != null) {
-                    parentProject.projectLicenses.projectLicense.each { license ->
-                        if(!it.projectLicenses.projectLicense.contains(new ProjectLicense(license.name,license.url)))
-                            it.projectLicenses.projectLicense.add(license)
-                    }
+            rootProject.groupId = rootProject.groupId != "" && rootProject.groupId != null ? rootProject.groupId : parentProject.groupId
+            rootProject.version = rootProject.version != "" && rootProject.version != null ? rootProject.version : parentProject.version
+            rootProject.url = rootProject.url != "" && rootProject.url != null ? rootProject.url : parentProject.url
+
+
+            rootProject.projectLicenses = rootProject.projectLicenses != null ? rootProject.projectLicenses : new ProjectLicenses()
+            rootProject.projectLicenses.projectLicense = rootProject.projectLicenses.projectLicense != null && rootProject.projectLicenses.projectLicense.size() != 0 ?
+                    rootProject.projectLicenses.projectLicense : new ArrayList<>()
+
+            if (parentProject.projectLicenses != null && parentProject.projectLicenses.projectLicense != null) {
+                parentProject.projectLicenses.projectLicense.each { license ->
+                    if (!rootProject.projectLicenses.projectLicense.contains(new ProjectLicense(license.name, license.url)))
+                        rootProject.projectLicenses.projectLicense.add(license)
                 }
+            }
 
-                it
-            }
-            else{
-                it
-            }
+            rootProject
+        } else {
+            rootProject
         }
     }
 
