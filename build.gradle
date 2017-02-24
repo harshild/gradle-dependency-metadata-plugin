@@ -5,7 +5,7 @@ apply plugin: 'idea'
 apply plugin: 'groovy'
 apply plugin: 'java-gradle-plugin'
 apply from: "$rootDir/gradle/integration-test.gradle"
-apply from: "$rootDir/gradle/publishing.gradle"
+//apply from: "$rootDir/gradle/publishing.gradle"
 
 repositories {
     mavenCentral()
