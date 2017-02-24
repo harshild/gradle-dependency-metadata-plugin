@@ -25,7 +25,10 @@ class MetadataReportGeneratorTask extends DefaultTask {
         List<XmlRootProject> parsedList = parser.parseXMLs(dependencyPomURLMap,XmlRootProject.class)
 
         DependencyDataFormatterUtil.format(project,parsedList)
-        Dependencies dep = Marshaller.marshall(parsedList)
+        Dependencies dep = Marshaller.marshall(parsedList,
+                project.name,
+                project.version,
+                project.group)
 
         File file = new File(project.reportsDir.path+"/dependency-metadata.xml")
         file.getParentFile().mkdirs()
