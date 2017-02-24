@@ -12,7 +12,7 @@ buildscript {
     }
 
     dependencies {
-		classpath("com.harshild:dependency-metadata-plugin:0.1")
+		classpath("com.harshild.gradle:dependency-metadata-plugin:0.1")
     }
 }
 

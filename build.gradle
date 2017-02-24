@@ -1,4 +1,4 @@
-group 'com.harshild'
+group 'com.harshild.gradle'
 version '0.1'
 
 apply plugin: 'idea'
