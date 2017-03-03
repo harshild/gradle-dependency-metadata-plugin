@@ -12,6 +12,7 @@ public class ProjectLicense
     private String name;
 
     private String url;
+    private String source = "POM";
 
     public ProjectLicense() {
     }
@@ -71,5 +72,14 @@ public class ProjectLicense
 
     public DependencyLicense toDependencyLicense() {
         return new DependencyLicense(this.name,this.url);
+    }
+
+    @XmlElement
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

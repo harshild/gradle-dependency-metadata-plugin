@@ -1,6 +1,6 @@
 package com.harshild.gradle.plugin.utils
 
-import com.harshild.gradle.plugin.dependency.PomFileManager
+import com.harshild.gradle.plugin.pom.PomFileManager
 import com.harshild.gradle.plugin.models.xml.parse.ProjectLicense
 import com.harshild.gradle.plugin.models.xml.parse.ProjectLicenses
 import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
@@ -18,7 +18,7 @@ class DependencyDataFormatterUtil {
         }
     }
 
-    def static XmlRootProject syncDetailsFromParent(Project project,XmlRootProject rootProject) {
+    private def static XmlRootProject syncDetailsFromParent(Project project,XmlRootProject rootProject) {
         if (projectHasParent(rootProject)) {
             def parent = rootProject.projectParent
             def parentPom = new PomFileManager(project).getPomForDependency(parent.groupId, parent.artifactId, parent.version)

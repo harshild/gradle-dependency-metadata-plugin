@@ -1,12 +1,10 @@
 package com.harshild.gradle.plugin.task
 
-import com.harshild.gradle.plugin.dependency.PomFileManager
+import com.harshild.gradle.plugin.metadata.MetadataFetcher
 import com.harshild.gradle.plugin.models.xml.generate.Dependencies
 import com.harshild.gradle.plugin.models.xml.marshaller.Marshaller
 import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
-import com.harshild.gradle.plugin.utils.DependencyDataFormatterUtil
 import com.harshild.gradle.plugin.xml.generator.XMLGenerator
-import com.harshild.gradle.plugin.xml.parser.XMLParser
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
@@ -20,11 +18,7 @@ class MetadataReportGeneratorTask extends DefaultTask {
 
     @TaskAction
     def run(){
-        Map<String,String> dependencyPomURLMap = new PomFileManager(project).getPomFileURL()
-        def parser = new XMLParser<XmlRootProject>()
-        List<XmlRootProject> parsedList = parser.parseXMLs(dependencyPomURLMap,XmlRootProject.class)
-
-        DependencyDataFormatterUtil.format(project,parsedList)
+        List<XmlRootProject> parsedList = MetadataFetcher.generateReportData(project)
         Dependencies dep = Marshaller.marshall(parsedList,
                 project.name,
                 project.version,
@@ -36,5 +30,6 @@ class MetadataReportGeneratorTask extends DefaultTask {
         new XMLGenerator<Dependencies>().generateXML(dep,file)
         println(INFO_MESSAGE)
     }
+
 
 }

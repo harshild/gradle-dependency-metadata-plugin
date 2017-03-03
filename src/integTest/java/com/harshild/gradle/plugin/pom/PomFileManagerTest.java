@@ -1,7 +1,8 @@
-package com.harshild.gradle.plugin.dependency;
+package com.harshild.gradle.plugin.pom;
 
 import com.harshild.GradleTestHelper;
 import com.harshild.gradle.plugin.models.xml.parse.ProjectParent;
+import com.harshild.gradle.plugin.pom.PomFileManager;
 import org.gradle.api.Project;
 import org.junit.Before;
 import org.junit.Rule;

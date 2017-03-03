@@ -1,5 +1,6 @@
-package com.harshild.gradle.plugin.dependency
+package com.harshild.gradle.plugin.pom
 
+import com.harshild.gradle.plugin.dependency.DependencyManager
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.artifacts.component.ComponentIdentifier
