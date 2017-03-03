@@ -14,8 +14,12 @@ class DependencyDataFormatterUtil {
     static List<XmlRootProject> format(Project project, List<XmlRootProject> xmlRootProjects) {
 
         xmlRootProjects.each {XmlRootProject rootProject ->
-            syncDetailsFromParent(project,rootProject)
+            format(project,rootProject)
         }
+    }
+
+    static XmlRootProject format(Project project, XmlRootProject xmlRootProject) {
+            syncDetailsFromParent(project,xmlRootProject)
     }
 
     private def static XmlRootProject syncDetailsFromParent(Project project,XmlRootProject rootProject) {

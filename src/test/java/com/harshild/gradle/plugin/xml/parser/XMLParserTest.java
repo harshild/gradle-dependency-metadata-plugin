@@ -107,13 +107,13 @@ public class XMLParserTest {
         assertTrue(xmlRootProjectList.size() == 2);
 
 
-        assertEquals("junit_test", xmlRootProjectList.get(0).getGroupId());
-        assertEquals("junit_test", xmlRootProjectList.get(0).getArtifactId());
-        assertEquals("4.12", xmlRootProjectList.get(0).getVersion());
-
-        assertEquals("junit", xmlRootProjectList.get(1).getGroupId());
-        assertEquals("junit", xmlRootProjectList.get(1).getArtifactId());
+        assertEquals("junit_test", xmlRootProjectList.get(1).getGroupId());
+        assertEquals("junit_test", xmlRootProjectList.get(1).getArtifactId());
         assertEquals("4.12", xmlRootProjectList.get(1).getVersion());
+
+        assertEquals("junit", xmlRootProjectList.get(0).getGroupId());
+        assertEquals("junit", xmlRootProjectList.get(0).getArtifactId());
+        assertEquals("4.12", xmlRootProjectList.get(0).getVersion());
 
 
 

@@ -20,13 +20,13 @@ class PomDataFetcher {
         parsedList
     }
 
-    static XmlRootProject getDetailsFromPomForArtifact(ResolvedArtifact artifact) {
-        File dependencyPom = new PomFileManager()
+    static XmlRootProject getDetailsFromPomForArtifact(Project project,ResolvedArtifact artifact) {
+        File dependencyPom = new PomFileManager(project)
                 .getPomFromArtifact(artifact)
 
         def parser = new XMLParser<XmlRootProject>()
         XmlRootProject parsed = parser.parseXML(dependencyPom, XmlRootProject.class)
-        //DependencyDataFormatterUtil.format(project, parsedList)
+        DependencyDataFormatterUtil.format(project, parsed)
         parsed
     }
 }

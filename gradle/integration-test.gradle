@@ -19,9 +19,7 @@ task integrationTest(type: Test) {
 check.dependsOn integrationTest
 
 idea.module {
-    sourceSets.integrationTest.allSource.srcDirs.each {
-        testSourceDirs += it
-    }
+    testSourceDirs += file('src/integTest/java')
 
     scopes.TEST.plus += [configurations.integrationTestCompile]
     scopes.TEST.plus += [configurations.integrationTestRuntime]

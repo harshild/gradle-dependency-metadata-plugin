@@ -17,7 +17,7 @@ class MetadataFetcher {
         def artifacts = new DependencyManager(project).getResolvedArtifacts('compile')
         artifacts.each { ResolvedArtifact artifact ->
             reportData.add(
-                    PomDataFetcher.getDetailsFromPomForArtifact(artifact)
+                    PomDataFetcher.getDetailsFromPomForArtifact(project,artifact)
             )
         }
         reportData
