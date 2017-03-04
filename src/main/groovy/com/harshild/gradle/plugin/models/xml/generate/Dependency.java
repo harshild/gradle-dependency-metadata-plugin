@@ -16,11 +16,12 @@ public class Dependency {
     private String description;
     private DependencyLicenses dependencyLicenses;
     private String url;
+    private String vendor;
 
     public Dependency() {
     }
 
-    public Dependency(String groupId, String artifactId, String name, String version, String description, DependencyLicenses dependencyLicenses, String url) {
+    public Dependency(String groupId, String artifactId, String name, String version, String description, DependencyLicenses dependencyLicenses, String url,String vendor) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.name = name;
@@ -28,6 +29,7 @@ public class Dependency {
         this.description = description;
         this.dependencyLicenses = dependencyLicenses;
         this.url = url;
+        this.vendor = vendor;
     }
 
     @XmlAttribute
@@ -109,6 +111,14 @@ public class Dependency {
 
     public static DependencyLicense createLicense(String name, String url){
         return new DependencyLicense(name,url);
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
     }
 }
 

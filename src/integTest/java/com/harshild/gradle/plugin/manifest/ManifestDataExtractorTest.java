@@ -1,18 +1,17 @@
 package com.harshild.gradle.plugin.manifest;
 
 import com.harshild.GradleTestHelper;
-import com.harshild.gradle.plugin.models.xml.parse.ProjectLicense;
-import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject;
-import com.harshild.gradle.plugin.pom.PomDataFetcher;
+import com.harshild.gradle.plugin.dependency.DependencyManager;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.ResolvedArtifact;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Harshil on 25-Feb-17.
  */
-public class ManifestDataFetcherTest {
+public class ManifestDataExtractorTest {
 
     private static final String ARTIFACT_3_VERSION = "3.1.0";
     private static final String ARTIFACT_3_NAME = "biz.aQute.bndlib";
@@ -30,7 +29,7 @@ public class ManifestDataFetcherTest {
     @Rule
     public final TemporaryFolder testProjectDir = new TemporaryFolder();
 
-    Project testProject;
+    private Project testProject;
 
     @Before
     public void setup() throws IOException {
@@ -41,10 +40,19 @@ public class ManifestDataFetcherTest {
 
     @Test
     public void itShouldFetchManifestFilesForProject() throws Exception {
+        for(ResolvedArtifact artifact :new DependencyManager(testProject).getResolvedArtifacts("compile")) {
+            Manifest manifestFile = ManifestDataExtractor.getManifestFile(artifact);
+            assertTrue(manifestFile.getMainAttributes().size() > 0);
+            assertTrue(manifestFile.getMainAttributes().containsKey(new Attributes.Name("Bundle-Name")));
+        }
+    }
 
-        List<Manifest> manifestFiles = ManifestDataFetcher.getManifestFile(testProject);
-        assertTrue(manifestFiles.get(0).getMainAttributes().size()>0);
-
+    @Test
+    public void itShouldFetchFieldAndValueAsMap() throws Exception {
+        for(ResolvedArtifact artifact :new DependencyManager(testProject).getResolvedArtifacts("compile")) {
+            HashMap<String,String> manifestData = ManifestDataExtractor.getManifestDataForArtifact(artifact);
+            assertTrue(manifestData.containsKey("Bundle-Name"));
+        }
     }
 
 }

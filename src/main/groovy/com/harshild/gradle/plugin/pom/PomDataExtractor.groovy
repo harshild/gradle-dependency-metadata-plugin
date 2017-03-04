@@ -9,7 +9,7 @@ import org.gradle.api.artifacts.ResolvedArtifact;
 /**
  * Created by Harshil on 25-Feb-17.
  */
-class PomDataFetcher {
+class PomDataExtractor {
     public static final String POM_SOURCE = "POM"
 
     static List<XmlRootProject> getDetailsFromPomForProject(Project project) {

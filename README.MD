@@ -21,6 +21,26 @@ buildscript {
 apply plugin: 'com.harshild.dependency-metadata'
 ```
 ***
+
+**Details Available**
+
+* Name
+* Artifact Id
+* Group Id
+* Version
+* Homepage URL
+* Description
+* License [ License Type , License URL ]
+
+These details are fetched from POM and then merged with details from Manifest.
+
+***Merge Strategy***
+
+* For array fields like License any detail found is appended
+* For other fields if details not found in POM only then Manifest data is put in the report
+
+****
+
 **Tasks**
 
 `generateDependencyMetadataReport` 

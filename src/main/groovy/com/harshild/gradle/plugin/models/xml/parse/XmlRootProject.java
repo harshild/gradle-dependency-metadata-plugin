@@ -16,6 +16,7 @@ public class XmlRootProject {
     private ProjectLicenses projectLicenses;
     private String url;
     private ProjectParent projectParent;
+    private String vendor;
 
     @XmlElement(name = "parent")
     public ProjectParent getProjectParent() {
@@ -123,6 +124,14 @@ public class XmlRootProject {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
     }
 }
 

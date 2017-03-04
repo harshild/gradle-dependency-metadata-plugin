@@ -16,7 +16,8 @@ class Marshaller {
                 project.version,
                 project.description,
                 project.projectLicenses == null? null :project.projectLicenses.toDependencyLicences(),
-                project.url
+                project.url,
+                project.vendor
         )
     }
 

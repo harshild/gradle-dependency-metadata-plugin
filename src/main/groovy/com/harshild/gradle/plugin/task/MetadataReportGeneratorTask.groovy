@@ -1,6 +1,6 @@
 package com.harshild.gradle.plugin.task
 
-import com.harshild.gradle.plugin.metadata.MetadataFetcher
+import com.harshild.gradle.plugin.metadata.MetadataExtractor
 import com.harshild.gradle.plugin.models.xml.generate.Dependencies
 import com.harshild.gradle.plugin.models.xml.marshaller.Marshaller
 import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
@@ -18,7 +18,7 @@ class MetadataReportGeneratorTask extends DefaultTask {
 
     @TaskAction
     def run(){
-        List<XmlRootProject> parsedList = MetadataFetcher.generateReportData(project)
+        List<XmlRootProject> parsedList = MetadataExtractor.generateReportData(project)
         Dependencies dep = Marshaller.marshall(parsedList,
                 project.name,
                 project.version,

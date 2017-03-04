@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Harshil on 25-Feb-17.
  */
-public class PomDataFetcherTest {
+public class PomDataExtractorTest {
 
     private static final String ARTIFACT_2_VERSION = "1";
     private static final String ARTIFACT_2_NAME = "javax.inject";
@@ -38,7 +38,7 @@ public class PomDataFetcherTest {
 
     @Test
     public void getDetailsFromPom() throws Exception {
-        List<XmlRootProject> detailsFromPomForProject = PomDataFetcher.getDetailsFromPomForProject(testProject);
+        List<XmlRootProject> detailsFromPomForProject = PomDataExtractor.getDetailsFromPomForProject(testProject);
         assertEquals(1,detailsFromPomForProject.size());
         assertEquals(ARTIFACT_2_NAME,detailsFromPomForProject.get(0).getArtifactId());
         assertEquals(ARTIFACT_2_GROUP,detailsFromPomForProject.get(0).getGroupId());
@@ -48,7 +48,7 @@ public class PomDataFetcherTest {
     @Test
     public void itShouldInsertSourceLabelAsPOMForLicenseData(){
         List<XmlRootProject> detailsFromPomForProject =
-                PomDataFetcher.getDetailsFromPomForProject(testProject);
+                PomDataExtractor.getDetailsFromPomForProject(testProject);
 
         assertEquals(1,detailsFromPomForProject.size());
         assertEquals(ARTIFACT_2_NAME,detailsFromPomForProject.get(0).getArtifactId());
@@ -57,7 +57,7 @@ public class PomDataFetcherTest {
 
         ProjectLicense projectLicense = detailsFromPomForProject.get(0)
                 .getProjectLicenses().getProjectLicense().get(0);
-        assertEquals(PomDataFetcher.POM_SOURCE,projectLicense.getSource());
+        assertEquals(PomDataExtractor.POM_SOURCE,projectLicense.getSource());
     }
 
 }
