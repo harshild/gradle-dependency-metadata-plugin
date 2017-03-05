@@ -52,3 +52,7 @@ This contains dependency related metadata information
 **License**
 
 MIT
+
+***Dependencies***
+
+Junit - EPL 1.0 - TestCompile
