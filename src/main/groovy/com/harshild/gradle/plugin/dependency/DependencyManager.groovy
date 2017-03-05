@@ -13,26 +13,25 @@ class DependencyManager {
         this.project = project
     }
 
-    Set<ResolvedArtifact> getResolvedArtifacts(String configuration){
+    Set<ResolvedArtifact> getResolvedArtifacts(String... configurations){
         Set<ResolvedArtifact> artifactSet = new HashSet<>()
-        project.configurations.getByName(configuration).resolve()
-        project.allprojects.each { sub->
-            if(isConfigurationAvailable(project,configuration))
-                artifactSet.addAll(sub.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
+        List<String> availableConfigurations = getAllConfigurations(project,configurations)
+        availableConfigurations.each { availableConfiguration ->
+            project.configurations.getByName(availableConfiguration).resolve()
+            project.allprojects.each { sub->
+                    artifactSet.addAll(sub.configurations.getByName(availableConfiguration).resolvedConfiguration.resolvedArtifacts)
+            }
+            artifactSet.addAll(project.configurations.getByName(availableConfiguration).resolvedConfiguration.resolvedArtifacts)
         }
-
-        if(isConfigurationAvailable(project,configuration))
-            artifactSet.addAll(project.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
-
         artifactSet
     }
 
-    private def boolean isConfigurationAvailable(Project project,String configuration) {
-        try{
-            project.configurations.getByName(configuration)
-            return true
-        }catch(Exception ignored){
-            return false
+    private static List<String> getAllConfigurations(Project project,String... configurations) {
+        List<String> toBeReturned = new ArrayList<>();
+        for( def config:project.configurations) {
+            if(configurations.length == 0 || configurations.contains(config.name))
+                toBeReturned.add(config.name)
         }
+        toBeReturned
     }
 }

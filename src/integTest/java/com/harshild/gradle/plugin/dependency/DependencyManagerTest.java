@@ -74,4 +74,21 @@ public class DependencyManagerTest {
         assertEquals(4,resolvedArtifacts.size());
     }
 
+    @Test
+    public void itShouldResolveDepdendencyForAllConfigurations() throws Exception {
+        GradleTestHelper.addDependency(testProject,"testCompile",ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
+
+        Set<ResolvedArtifact> resolvedArtifacts = dependencyManager.getResolvedArtifacts();
+        assertEquals(4,resolvedArtifacts.size());
+    }
+
+    @Test
+    public void itShouldResolveDepdendencyForSelectiveConfigurations() throws Exception {
+        GradleTestHelper.addDependency(testProject,"testCompile",ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
+
+        Set<ResolvedArtifact> resolvedArtifacts = dependencyManager.getResolvedArtifacts("compile");
+        assertEquals(2,resolvedArtifacts.size());
+    }
+
+
 }
