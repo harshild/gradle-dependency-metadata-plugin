@@ -1,6 +1,7 @@
 package com.harshild.gradle.plugin.dependency
 
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ResolvedArtifact
 
 /**
@@ -19,7 +20,7 @@ class DependencyManager {
         availableConfigurations.each { availableConfiguration ->
             project.configurations.getByName(availableConfiguration).resolve()
             project.allprojects.each { sub->
-                    artifactSet.addAll(sub.configurations.getByName(availableConfiguration).resolvedConfiguration.resolvedArtifacts)
+                artifactSet.addAll(sub.configurations.getByName(availableConfiguration).resolvedConfiguration.resolvedArtifacts)
             }
             artifactSet.addAll(project.configurations.getByName(availableConfiguration).resolvedConfiguration.resolvedArtifacts)
         }
@@ -30,8 +31,14 @@ class DependencyManager {
         List<String> toBeReturned = new ArrayList<>();
         for( def config:project.configurations) {
             if(configurations.length == 0 || configurations.contains(config.name))
-                toBeReturned.add(config.name)
+                if(canBeResolved(config))
+                    toBeReturned.add(config.name)
         }
         toBeReturned
+    }
+
+    private static canBeResolved(configuration) {
+        configuration.metaClass.respondsTo(configuration, "isCanBeResolved") ?
+                configuration.isCanBeResolved() : true
     }
 }

@@ -75,7 +75,7 @@ public class DependencyManagerTest {
     }
 
     @Test
-    public void itShouldResolveDepdendencyForAllConfigurations() throws Exception {
+    public void itShouldResolveDependencyForAllConfigurations() throws Exception {
         GradleTestHelper.addDependency(testProject,"testCompile",ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
 
         Set<ResolvedArtifact> resolvedArtifacts = dependencyManager.getResolvedArtifacts();
@@ -83,7 +83,7 @@ public class DependencyManagerTest {
     }
 
     @Test
-    public void itShouldResolveDepdendencyForSelectiveConfigurations() throws Exception {
+    public void itShouldResolveDependencyForSelectiveConfigurations() throws Exception {
         GradleTestHelper.addDependency(testProject,"testCompile",ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
 
         Set<ResolvedArtifact> resolvedArtifacts = dependencyManager.getResolvedArtifacts("compile");
