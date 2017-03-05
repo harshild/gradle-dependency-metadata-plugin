@@ -1,5 +1,5 @@
 group 'com.harshild.gradle'
-version '0.1'
+version '0.2-BETA'
 
 apply plugin: 'idea'
 apply plugin: 'groovy'
