@@ -68,6 +68,24 @@ public class DependencyMetadataPluginTest {
         assertTrue(new File(testProjectDir.getRoot().getAbsolutePath()+"/build/reports/dependency-metadata.xml").exists());
     }
 
+    @Test
+    public void plugin_canExecute_reportGeneratorTask_AndGenerateXML_SpecialCaseForDom4j() throws IOException {
+        String compileDep = buildFileContent + "\n"+
+                "apply plugin: 'java'\n\n"
+                +"repositories {\n" +
+                "    mavenCentral()\n" +
+                "}\n"+
+                "dependencies {\n" +
+                "    compile 'dom4j:dom4j:1.6.1'\n" +
+                "}";
+        GradleTestHelper.writeFile(buildFile, compileDep);
+
+        BuildResult result = GradleTestHelper.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
+        assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
+        assertTrue(result.getOutput().contains(MetadataReportGeneratorTask.INFO_MESSAGE));
+        assertTrue(new File(testProjectDir.getRoot().getAbsolutePath()+"/build/reports/dependency-metadata.xml").exists());
+    }
+
 
     @Test
     public void plugin_canExecute_reportGeneratorTask_AndGenerateXMLForMultipleDependencies() throws IOException {
