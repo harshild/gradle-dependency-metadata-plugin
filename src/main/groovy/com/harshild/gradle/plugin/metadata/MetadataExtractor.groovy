@@ -37,7 +37,8 @@ class MetadataExtractor {
             xmlProject.name = checkNull(xmlProject.name) ? attributes.getValue('Bundle-Name') ?: attributes.getValue('Implementation-Title') ?: attributes.getValue('Bundle-SymbolicName') : xmlProject.name
             xmlProject.version = checkNull(xmlProject.version) ? attributes.getValue('Bundle-Version') ?: attributes.getValue('Implementation-Version') ?: attributes.getValue('Specification-Version') : xmlProject.version
             xmlProject.description = checkNull(xmlProject.description) ? attributes.getValue('Bundle-Description') : xmlProject.description
-            xmlProject.projectLicenses.projectLicense.add(new ProjectLicense(attributes.getValue('Bundle-License'), ''))
+            if(attributes.getValue('Bundle-License'))
+                xmlProject.projectLicenses.projectLicense.add(new ProjectLicense(attributes.getValue('Bundle-License'), 'no url available'))
             xmlProject.vendor = checkNull(xmlProject.vendor) ? attributes.getValue('Bundle-Vendor') ?: attributes.getValue('Implementation-Vendor') : xmlProject.vendor
             xmlProject.url = checkNull(xmlProject.url) ? attributes.getValue('Bundle-DocURL') : xmlProject.url
         }
