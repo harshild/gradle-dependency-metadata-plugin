@@ -8,7 +8,8 @@ import com.harshild.gradle.plugin.pom.PomDataExtractor
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedArtifact
 
-import java.util.jar.Manifest
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 /**
  * Created by Harshil on 26-Feb-17.
@@ -38,14 +39,29 @@ class MetadataExtractor {
             xmlProject.version = checkNull(xmlProject.version) ? attributes.getValue('Bundle-Version') ?: attributes.getValue('Implementation-Version') ?: attributes.getValue('Specification-Version') : xmlProject.version
             xmlProject.description = checkNull(xmlProject.description) ? attributes.getValue('Bundle-Description') : xmlProject.description
             if(attributes.getValue('Bundle-License'))
-                xmlProject.projectLicenses.projectLicense.add(new ProjectLicense(attributes.getValue('Bundle-License'), 'no url available'))
+                xmlProject.projectLicenses.projectLicense.add(getProjectLicense(attributes.getValue('Bundle-License')))
             xmlProject.vendor = checkNull(xmlProject.vendor) ? attributes.getValue('Bundle-Vendor') ?: attributes.getValue('Implementation-Vendor') : xmlProject.vendor
             xmlProject.url = checkNull(xmlProject.url) ? attributes.getValue('Bundle-DocURL') : xmlProject.url
         }
         xmlProject
     }
 
-    static checkNull(String s) {
+    private static ProjectLicense getProjectLicense(String licenseValue) {
+        if(isURL(licenseValue))
+            new ProjectLicense('no name available',licenseValue)
+        else
+            new ProjectLicense(licenseValue, 'no url available')
+    }
+
+     static boolean isURL(String licenseValue) {
+        String URL_REGEX = "^((http?|ftp|https)://|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?\$"
+
+        Pattern p = Pattern.compile(URL_REGEX)
+        Matcher m = p.matcher(licenseValue)
+        m.find()
+    }
+
+    private static checkNull(String s) {
         return s== null || s.trim()=="" || s==''
     }
 }
