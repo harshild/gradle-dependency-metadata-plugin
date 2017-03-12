@@ -1,6 +1,7 @@
 package com.harshild.gradle.plugin.metadata
 
 import com.harshild.gradle.plugin.dependency.DependencyManager
+import com.harshild.gradle.plugin.extension.ReportExtension
 import com.harshild.gradle.plugin.manifest.ManifestDataExtractor
 import com.harshild.gradle.plugin.models.xml.parse.ProjectLicense
 import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
@@ -32,7 +33,7 @@ class MetadataExtractor {
         XmlRootProject xmlProject = PomDataExtractor.getDetailsFromPomForArtifact(project, artifact)
         def manifest = ManifestDataExtractor.getManifestFile(artifact)
 
-        if (manifest) {
+        if (manifest && project.extensions.report.includeManifestData) {
             def attributes = manifest.mainAttributes
 
             xmlProject.name = checkNull(xmlProject.name) ? attributes.getValue('Bundle-Name') ?: attributes.getValue('Implementation-Title') ?: attributes.getValue('Bundle-SymbolicName') : xmlProject.name

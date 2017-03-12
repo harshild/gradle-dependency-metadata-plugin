@@ -10,10 +10,13 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -43,6 +46,37 @@ public class DependencyMetadataPluginTest {
     }
 
     @Test
+    public void plugin_has_reportExtension_toNotUseManifest() throws IOException {
+        String compileDep =  buildFileContent + "\n"+
+                "apply plugin: 'java'\n\n"
+                +"repositories {\n" +
+                "    mavenCentral()\n" +
+                "}\n"+
+                "dependencies {\n" +
+                "   compile 'dom4j:dom4j:1.6.1'\n" +
+                "}\n" +
+                "report {\n" +
+                "   includeManifestData false\n" +
+                "\n}" ;
+        GradleTestHelper.writeFile(buildFile, compileDep);
+
+        BuildResult result = GradleTestHelper.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
+        assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
+        assertTrue(result.getOutput().contains(MetadataReportGeneratorTask.INFO_MESSAGE));
+        assertTrue(isReportFileExists());
+        assertFalse(GradleTestHelper.fileContains(
+                       new File(testProjectDir.getRoot().getAbsolutePath()+"/build/reports/dependency-metadata.xml"),
+                "vendor"
+               )
+        );
+
+    }
+
+    private boolean isReportFileExists() {
+        return new File(testProjectDir.getRoot().getAbsolutePath()+"/build/reports/dependency-metadata.xml").exists();
+    }
+
+    @Test
     public void plugin_canExecute_reportGeneratorTask() throws IOException {
         BuildResult result = GradleTestHelper.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
         assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
@@ -65,7 +99,7 @@ public class DependencyMetadataPluginTest {
         BuildResult result = GradleTestHelper.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
         assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
         assertTrue(result.getOutput().contains(MetadataReportGeneratorTask.INFO_MESSAGE));
-        assertTrue(new File(testProjectDir.getRoot().getAbsolutePath()+"/build/reports/dependency-metadata.xml").exists());
+        assertTrue(isReportFileExists());
     }
 
     @Test
@@ -83,7 +117,7 @@ public class DependencyMetadataPluginTest {
         BuildResult result = GradleTestHelper.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
         assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
         assertTrue(result.getOutput().contains(MetadataReportGeneratorTask.INFO_MESSAGE));
-        assertTrue(new File(testProjectDir.getRoot().getAbsolutePath()+"/build/reports/dependency-metadata.xml").exists());
+        assertTrue(isReportFileExists());
     }
 
 
@@ -103,7 +137,7 @@ public class DependencyMetadataPluginTest {
         BuildResult result = GradleTestHelper.executeBuild(testProjectDir, CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT);
         assertEquals(result.task(":"+CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT).getOutcome(), SUCCESS);
         assertTrue(result.getOutput().contains(MetadataReportGeneratorTask.INFO_MESSAGE));
-        assertTrue(new File(testProjectDir.getRoot().getAbsolutePath()+"/build/reports/dependency-metadata.xml").exists());
+        assertTrue(isReportFileExists());
     }
 
     @Test

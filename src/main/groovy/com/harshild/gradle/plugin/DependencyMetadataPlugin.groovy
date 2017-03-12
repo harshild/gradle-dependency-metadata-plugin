@@ -1,6 +1,7 @@
 package com.harshild.gradle.plugin
 
 import com.harshild.gradle.plugin.constants.CommandConstants
+import com.harshild.gradle.plugin.extension.ReportExtension
 import com.harshild.gradle.plugin.task.MetadataReportGeneratorTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -13,8 +14,8 @@ class DependencyMetadataPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-
         project.plugins.apply(JavaPlugin.class)
+        project.extensions.create('report',ReportExtension)
         project.task(CommandConstants.GENERATE_DEPENDENCY_METADATA_REPORT, type: MetadataReportGeneratorTask,dependsOn: ':build')
     }
 }
