@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by harshild on 2/10/2017.
@@ -62,6 +62,4 @@ public class MarshallerTest {
         assertEquals(2,dependencies.getDependency().size());
 
     }
-
-
 }

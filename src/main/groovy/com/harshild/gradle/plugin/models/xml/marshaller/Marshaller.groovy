@@ -16,20 +16,17 @@ class Marshaller {
                 project.version,
                 project.description,
                 project.projectLicenses == null? null :project.projectLicenses.toDependencyLicences(),
-                project.url
+                project.url,
+                project.vendor
         )
     }
 
     static Dependencies marshall(XmlRootProject... project) {
-        List<Dependency> dependencyList = new ArrayList<>();
-        project.each {
-            dependencyList.add(marshall(it))
-        }
-        return new Dependencies(dependencyList)
+        marshall(Arrays.asList(project),"","","")
     }
 
-    static Dependencies marshall(List<XmlRootProject> project) {
-        List<Dependency> dependencyList = new ArrayList<>();
+    static Dependencies marshall(List<XmlRootProject> project, String projectName, String projectVersion, String projectGroup) {
+        List<Dependency> dependencyList = new ArrayList<>()
         project.each {
             dependencyList.add(marshall(it))
         }

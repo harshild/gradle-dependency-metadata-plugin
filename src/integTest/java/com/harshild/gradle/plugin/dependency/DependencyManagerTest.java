@@ -52,16 +52,16 @@ public class DependencyManagerTest {
 
     @Test
     public void itShouldReturnASetOfResolvedDependenciesForConfiguration() throws Exception {
-        Set<ResolvedArtifact> articafts = dependencyManager.getResolvedArtifacts("compile");
-        assertEquals(2,articafts.size());
+        Set<ResolvedArtifact> artifacts = dependencyManager.getResolvedArtifacts("compile");
+        assertEquals(2,artifacts.size());
     }
 
     @Test
     public void itShouldReturnASetOfResolvedDependenciesForConfigurationIncludingTransitiveDependencies() throws Exception {
         GradleTestHelper.addCompileDependency(testProject,ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
 
-        Set<ResolvedArtifact> articafts = dependencyManager.getResolvedArtifacts("compile");
-        assertEquals(4,articafts.size());
+        Set<ResolvedArtifact> artifacts = dependencyManager.getResolvedArtifacts("compile");
+        assertEquals(4,artifacts.size());
     }
 
     @Test
@@ -73,5 +73,22 @@ public class DependencyManagerTest {
         Set<ResolvedArtifact> resolvedArtifacts = dependencyManager.getResolvedArtifacts("compile");
         assertEquals(4,resolvedArtifacts.size());
     }
+
+    @Test
+    public void itShouldResolveDependencyForAllConfigurations() throws Exception {
+        GradleTestHelper.addDependency(testProject,"testCompile",ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
+
+        Set<ResolvedArtifact> resolvedArtifacts = dependencyManager.getResolvedArtifacts();
+        assertEquals(4,resolvedArtifacts.size());
+    }
+
+    @Test
+    public void itShouldResolveDependencyForSelectiveConfigurations() throws Exception {
+        GradleTestHelper.addDependency(testProject,"testCompile",ARTIFACT_1_GROUP,ARTIFACT_1_NAME,ARTIFACT_1_VERSION);
+
+        Set<ResolvedArtifact> resolvedArtifacts = dependencyManager.getResolvedArtifacts("compile");
+        assertEquals(2,resolvedArtifacts.size());
+    }
+
 
 }

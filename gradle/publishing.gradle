@@ -1,32 +1,88 @@
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: 'maven'
+
+archivesBaseName = 'dependency-metadata-plugin'
 
 def GITHUB_URL_ROOT = 'https://github.com/harshild/gradle-dep-metadata-plugin'
+
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            artifact sourcesJar
+            artifact groovydocJar
+            artifact javadocJar
 
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('name', 'Gradle Dependency Metadata plugin')
-                root.appendNode('description', 'Gradle plugin for finding details about dependency')
-                root.appendNode('url', GITHUB_URL_ROOT)
-                root.appendNode('inceptionYear', '2017')
+        }
+    }
+}
 
-                def scm = root.appendNode('scm')
-                scm.appendNode('url', GITHUB_URL_ROOT)
 
-                def license = root.appendNode('licenses').appendNode('license')
-                license.appendNode('name', 'MIT')
-                license.appendNode('url', GITHUB_URL_ROOT+'/LICENSE')
-                license.appendNode('distribution', 'repo')
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
 
-                def developers = root.appendNode('developers')
-                def harshild = developers.appendNode('developer')
-                harshild.appendNode('id', 'harshild')
-                harshild.appendNode('name', 'Harshil Dhariwal')
-                harshild.appendNode('email', 'harshil.dhariwal@gmail.com')
+task groovydocJar(type: Jar) {
+    classifier = 'groovydocJar'
+    from groovydoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives  {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Gradle Dependency Metadata plugin'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'Gradle plugin for finding details about dependency'
+                url GITHUB_URL_ROOT
+
+                scm {
+                    connection GITHUB_URL_ROOT+'.git'
+                    developerConnection GITHUB_URL_ROOT+'.git'
+                    url GITHUB_URL_ROOT
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url GITHUB_URL_ROOT+'/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'harshild'
+                        name 'Harshil Dhariwal'
+                        email 'harshil.dhariwal@gmail.com'
+                    }
+                }
             }
         }
     }

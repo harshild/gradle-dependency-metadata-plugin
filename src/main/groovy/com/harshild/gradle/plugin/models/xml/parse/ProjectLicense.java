@@ -12,6 +12,7 @@ public class ProjectLicense
     private String name;
 
     private String url;
+    private String source = "POM";
 
     public ProjectLicense() {
     }
@@ -44,6 +45,24 @@ public class ProjectLicense
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProjectLicense that = (ProjectLicense) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return url != null ? url.equals(that.url) : that.url == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "ProjectLicense{" +
                 "name='" + name + '\'' +
@@ -53,5 +72,14 @@ public class ProjectLicense
 
     public DependencyLicense toDependencyLicense() {
         return new DependencyLicense(this.name,this.url);
+    }
+
+    @XmlElement
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

@@ -42,10 +42,7 @@ public class GradleTestHelper {
     }
 
     public static void addCompileDependency(Project project, String groupName, String artifactName, String artifactVersion) {
-        project.getConfigurations()
-                .getByName("compile")
-                .getDependencies()
-                .add(new DefaultExternalModuleDependency(groupName, artifactName, artifactVersion));
+        addDependency(project,"compile",groupName,artifactName,artifactVersion);
     }
 
     public static Project addSubProject(Project rootProject, String projectName) {
@@ -76,5 +73,12 @@ public class GradleTestHelper {
     public static void addJavaMavenBehaviour(Project project) {
         project.getPluginManager().apply(JavaPlugin.class);
         project.getRepositories().mavenCentral();
+    }
+
+    public static void addDependency(Project project, String configuration, String groupName, String artifactName, String artifactVersion) {
+        project.getConfigurations()
+                .getByName(configuration)
+                .getDependencies()
+                .add(new DefaultExternalModuleDependency(groupName, artifactName, artifactVersion));
     }
 }

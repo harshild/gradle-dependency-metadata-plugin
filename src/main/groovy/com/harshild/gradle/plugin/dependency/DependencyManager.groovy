@@ -1,6 +1,7 @@
 package com.harshild.gradle.plugin.dependency
 
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ResolvedArtifact
 
 /**
@@ -13,15 +14,31 @@ class DependencyManager {
         this.project = project
     }
 
-    Set<ResolvedArtifact> getResolvedArtifacts(String configuration){
+    Set<ResolvedArtifact> getResolvedArtifacts(String... configurations){
         Set<ResolvedArtifact> artifactSet = new HashSet<>()
-        project.configurations.compile.resolve()
-        project.allprojects.each { sub->
-            artifactSet.addAll(sub.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
+        List<String> availableConfigurations = getAllConfigurations(project,configurations)
+        availableConfigurations.each { availableConfiguration ->
+            project.configurations.getByName(availableConfiguration).resolve()
+            project.allprojects.each { sub->
+                artifactSet.addAll(sub.configurations.getByName(availableConfiguration).resolvedConfiguration.resolvedArtifacts)
+            }
+            artifactSet.addAll(project.configurations.getByName(availableConfiguration).resolvedConfiguration.resolvedArtifacts)
         }
-
-        artifactSet.addAll(project.configurations.getByName(configuration).resolvedConfiguration.resolvedArtifacts)
-
         artifactSet
+    }
+
+    private static List<String> getAllConfigurations(Project project,String... configurations) {
+        List<String> toBeReturned = new ArrayList<>();
+        for( def config:project.configurations) {
+            if(configurations.length == 0 || configurations.contains(config.name))
+                if(canBeResolved(config))
+                    toBeReturned.add(config.name)
+        }
+        toBeReturned
+    }
+
+    private static canBeResolved(configuration) {
+        configuration.metaClass.respondsTo(configuration, "isCanBeResolved") ?
+                configuration.isCanBeResolved() : true
     }
 }

@@ -15,7 +15,7 @@ import javax.xml.transform.sax.SAXSource
 class XMLParser<T> {
     T parseXML(File file,Class<T> t){
         def (Unmarshaller unmarshaller, SAXSource source) = createParserInstance(t, file)
-        unmarshaller.unmarshal(source,t).getValue();
+        unmarshaller.unmarshal(source,t).getValue()
     }
 
     List<T> parseXMLs(Map<String,String> nameToURL,Class<T> t){
@@ -36,24 +36,24 @@ class XMLParser<T> {
     }
 
     private XMLReader createXMLReader() {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        factory.newSAXParser().getXMLReader();
+        SAXParserFactory factory = SAXParserFactory.newInstance()
+        factory.newSAXParser().getXMLReader()
     }
 
     private Unmarshaller createJAXBUnmarshaller(Class<T> t) {
-        JAXBContext jaxbContext = JAXBContext.newInstance(t);
-        jaxbContext.createUnmarshaller();
+        JAXBContext jaxbContext = JAXBContext.newInstance(t)
+        jaxbContext.createUnmarshaller()
     }
 
     private SAXSource createSAXSource(File file, XMLNamespaceFilter xmlFilter) {
-        InputStream inStream = new FileInputStream(file);
-        new SAXSource(xmlFilter, new InputSource(inStream));
+        InputStream inStream = new FileInputStream(file)
+        new SAXSource(xmlFilter, new InputSource(inStream))
     }
 
     private XMLNamespaceFilter createNamespaceFilter( Unmarshaller jaxbUnmarshaller) {
         XMLReader reader = createXMLReader()
-        XMLFilterImpl xmlFilter = new XMLNamespaceFilter(reader);
-        reader.setContentHandler(jaxbUnmarshaller.getUnmarshallerHandler());
+        XMLFilterImpl xmlFilter = new XMLNamespaceFilter(reader)
+        reader.setContentHandler(jaxbUnmarshaller.getUnmarshallerHandler())
         xmlFilter
     }
 

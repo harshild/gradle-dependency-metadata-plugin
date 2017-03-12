@@ -1,11 +1,11 @@
-group 'com.harshild'
-version '0.1'
+group 'com.harshild.gradle'
+version '0.2'
 
 apply plugin: 'idea'
 apply plugin: 'groovy'
 apply plugin: 'java-gradle-plugin'
 apply from: "$rootDir/gradle/integration-test.gradle"
-apply from: "$rootDir/gradle/publishing.gradle"
+//apply from: "$rootDir/gradle/publishing.gradle"
 
 repositories {
     mavenCentral()
@@ -16,7 +16,6 @@ dependencies {
 
     testCompile gradleTestKit()
     testCompile 'junit:junit:4.12'
-    testCompile 'org.assertj:assertj-core:3.5.2'
 }
 
 sourceCompatibility = 1.7
