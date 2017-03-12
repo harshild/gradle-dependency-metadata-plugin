@@ -49,6 +49,19 @@ Generate an XML report under build/reports as dependency-metadata.xml
 This contains dependency related metadata information
 
 ****
+
+**Configurations**
+
+```
+report{
+
+}
+``` 
+
+includeManifestData | true/false | Default : true | includes or excludes usage of Manifest.MF for metadata information
+
+****
+
 **License**
 
 MIT
