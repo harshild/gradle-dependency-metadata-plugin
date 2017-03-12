@@ -58,7 +58,9 @@ report{
 }
 ``` 
 
-includeManifestData | true/false | Default : true | includes or excludes usage of Manifest.MF for metadata information
+|  Configuration | Description | Possible Values |Default Value| 
+|---|---|---|---|
+|includeManifestData |includes or excludes usage of Manifest.MF for metadata information | true / false | true |
 
 ****
 
