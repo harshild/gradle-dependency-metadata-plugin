@@ -1,12 +1,14 @@
-package com.harshild.gradle.plugin.xml.generator
+package com.harshild.gradle.plugin.fileHandler.writer
+
+import com.harshild.gradle.plugin.fileHandler.FileWriter
 
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.Marshaller
 /**
  * Created by harshild on 2/8/2017.
  */
-class XMLGenerator<T> {
-    void generateXML(T t, File file){
+class XMLWriter<T>  implements FileWriter<T>{
+    void generate(T t, File file){
         file.createNewFile()
         JAXBContext jaxbContext=JAXBContext.newInstance(t.class)
         Marshaller marshaller=jaxbContext.createMarshaller()

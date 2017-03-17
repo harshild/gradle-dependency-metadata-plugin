@@ -4,7 +4,7 @@ import com.harshild.gradle.plugin.metadata.MetadataExtractor
 import com.harshild.gradle.plugin.models.xml.generate.Dependencies
 import com.harshild.gradle.plugin.models.xml.marshaller.Marshaller
 import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
-import com.harshild.gradle.plugin.xml.generator.XMLGenerator
+import com.harshild.gradle.plugin.fileHandler.writer.XMLWriter
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
@@ -27,7 +27,7 @@ class MetadataReportGeneratorTask extends DefaultTask {
         File file = new File(project.reportsDir.path+"/dependency-metadata.xml")
         file.getParentFile().mkdirs()
         file.createNewFile()
-        new XMLGenerator<Dependencies>().generateXML(dep,file)
+        new XMLWriter<Dependencies>().generate(dep,file)
         println(INFO_MESSAGE)
     }
 

@@ -1,4 +1,4 @@
-package com.harshild.gradle.plugin.xml.generator;
+package com.harshild.gradle.plugin.fileHandler.writer;
 
 import com.harshild.GradleTestHelper;
 import com.harshild.gradle.plugin.models.xml.parse.ProjectLicense;
@@ -16,19 +16,19 @@ import java.util.Arrays;
 import static junit.framework.TestCase.assertTrue;
 
 /**
- * Created by harshild on 2/8/2017.
+ * Created by harshild on 17/03/17.
  */
-public class XMLGeneratorTest {
+public class JsonWriterTest {
     @Rule
     public final TemporaryFolder testResourceDir = new TemporaryFolder();
-    private File xmlFile;
+    private File jsonFile;
     private XmlRootProject xmlRootProject;
-    private XMLGenerator<XmlRootProject> projectXMLGenerator;
+    private JsonWriter<XmlRootProject> projectJsonWriter;
 
 
     @Before
     public void setUp() throws IOException {
-        xmlFile = testResourceDir.newFile("test.xml");
+        jsonFile = testResourceDir.newFile("test.json");
 
         xmlRootProject = new XmlRootProject("group",
                 "artifact",
@@ -41,15 +41,14 @@ public class XMLGeneratorTest {
                 )),
                 "http://testUrl");
 
-        projectXMLGenerator = new XMLGenerator<>();
+        projectJsonWriter = new JsonWriter<>();
 
     }
 
     @Test
-    public void itShouldGenerateXMLForTheXMLEntity() throws Exception {
-        projectXMLGenerator.generateXML(xmlRootProject,xmlFile);
-        assertTrue(xmlFile.exists());
-        assertTrue(GradleTestHelper.fileContains(xmlFile,"<project>"));
+    public void itShouldGenerateJsonForTheXMLEntity() throws Exception {
+        projectJsonWriter.generate(xmlRootProject, jsonFile);
+        assertTrue(jsonFile.exists());
+        assertTrue(GradleTestHelper.fileContains(jsonFile,"\"\",\"source\":\"POM\",\"name\":\"\"},{\"url\":\"\",\"source\":\"POM\",\"name\":\"\"}]},\"version\":\"version\",\"groupId\":\"group\",\"description\":\"description\",\"url\":\"http://testUrl\",\"name\":\"Test\",\"artifactId\":\"artifact\"}"));
     }
-
 }
