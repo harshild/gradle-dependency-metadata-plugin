@@ -18,7 +18,7 @@ import static junit.framework.TestCase.assertTrue;
 /**
  * Created by harshild on 17/03/17.
  */
-public class JsonWriterTest {
+class JsonWriterTest {
     @Rule
     public final TemporaryFolder testResourceDir = new TemporaryFolder();
     private File jsonFile;
