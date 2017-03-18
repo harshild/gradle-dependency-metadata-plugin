@@ -22,7 +22,7 @@ class DependencyDataFormatterUtil {
             syncDetailsFromParent(project,xmlRootProject)
     }
 
-    private def static XmlRootProject syncDetailsFromParent(Project project,XmlRootProject rootProject) {
+    private static XmlRootProject syncDetailsFromParent(Project project, XmlRootProject rootProject) {
         if (projectHasParent(rootProject)) {
             def parent = rootProject.projectParent
             def parentPom = new PomFileManager(project).getPomForDependency(parent.groupId, parent.artifactId, parent.version)

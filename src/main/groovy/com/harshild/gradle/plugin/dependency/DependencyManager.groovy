@@ -28,7 +28,7 @@ class DependencyManager {
     }
 
     private static List<String> getAllConfigurations(Project project,String... configurations) {
-        List<String> toBeReturned = new ArrayList<>();
+        List<String> toBeReturned = new ArrayList<>()
         for( def config:project.configurations) {
             if(configurations.length == 0 || configurations.contains(config.name))
                 if(canBeResolved(config))

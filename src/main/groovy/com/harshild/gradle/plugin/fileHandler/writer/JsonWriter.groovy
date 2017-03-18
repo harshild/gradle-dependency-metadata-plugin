@@ -1,7 +1,7 @@
 package com.harshild.gradle.plugin.fileHandler.writer
 
 import com.harshild.gradle.plugin.fileHandler.FileWriter
-import groovy.json.JsonOutput;
+import groovy.json.JsonOutput
 
 /**
  * Created by harshild on 17/03/17.

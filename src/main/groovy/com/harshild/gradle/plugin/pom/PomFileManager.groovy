@@ -18,7 +18,7 @@ class PomFileManager {
     PomFileManager() {
     }
 
-    def PomFileManager(Project project){
+    PomFileManager(Project project){
         this.project = project
         dependencyManager = new DependencyManager(project)
     }
@@ -27,11 +27,11 @@ class PomFileManager {
         return getPom(artifact.id.componentIdentifier)
     }
 
-    def File getPomForDependency(String groupId, String artifactId, String version)  {
+    File getPomForDependency(String groupId, String artifactId, String version)  {
         getPom(new DefaultModuleComponentIdentifier(groupId,artifactId,version))
     }
 
-    def File getPom(ComponentIdentifier componentIdentifier) {
+    File getPom(ComponentIdentifier componentIdentifier) {
         def component = project.dependencies.createArtifactResolutionQuery()
                 .forComponents(componentIdentifier)
                 .withArtifacts(MavenModule, MavenPomArtifact)

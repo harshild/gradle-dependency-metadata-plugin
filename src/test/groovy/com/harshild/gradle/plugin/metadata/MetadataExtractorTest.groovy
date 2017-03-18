@@ -1,21 +1,21 @@
-package com.harshild.gradle.plugin.metadata;
+package com.harshild.gradle.plugin.metadata
 
-import org.junit.Test;
+import org.junit.Test
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*
 
 /**
  * Created by harshild on 10/03/17.
  */
-public class MetadataExtractorTest {
+class MetadataExtractorTest {
     @Test
-    public void itShouldCheckIfTheTextISURL() throws Exception {
-        assertFalse(MetadataExtractor.isURL("Test a"));
-        assertTrue(MetadataExtractor.isURL("a.com"));
-        assertTrue(MetadataExtractor.isURL("https://a.com"));
-        assertTrue(MetadataExtractor.isURL("http://a.com"));
-        assertTrue(MetadataExtractor.isURL("https://www.a.com"));
-        assertTrue(MetadataExtractor.isURL("http://www.a.com"));
+    void itShouldCheckIfTheTextISURL() throws Exception {
+        assertFalse(MetadataExtractor.isURL("Test a"))
+        assertTrue(MetadataExtractor.isURL("a.com"))
+        assertTrue(MetadataExtractor.isURL("https://a.com"))
+        assertTrue(MetadataExtractor.isURL("http://a.com"))
+        assertTrue(MetadataExtractor.isURL("https://www.a.com"))
+        assertTrue(MetadataExtractor.isURL("http://www.a.com"))
     }
 
 }

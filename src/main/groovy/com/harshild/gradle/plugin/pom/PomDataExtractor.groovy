@@ -4,7 +4,7 @@ import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
 import com.harshild.gradle.plugin.utils.DependencyDataFormatterUtil
 import com.harshild.gradle.plugin.xml.parser.XMLParser
 import org.gradle.api.Project
-import org.gradle.api.artifacts.ResolvedArtifact;
+import org.gradle.api.artifacts.ResolvedArtifact
 
 /**
  * Created by Harshil on 25-Feb-17.

@@ -13,11 +13,11 @@ import org.gradle.api.tasks.TaskAction
  */
 class MetadataReportGeneratorTask extends DefaultTask {
 
-    public MetadataReportGeneratorTask(){}
+    MetadataReportGeneratorTask(){}
     public static final String INFO_MESSAGE = "\nGenerating a report with Metadata information for all Dependencies"
 
     @TaskAction
-    def run(){
+    run(){
         List<XmlRootProject> parsedList = MetadataExtractor.generateReportData(project)
         Dependencies dep = Marshaller.marshall(parsedList,
                 project.name,
