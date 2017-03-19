@@ -1,13 +1,11 @@
-package com.harshild.gradle.plugin.models.xml.marshaller
+package com.harshild.gradle.plugin.models.pom.marshaller
 
-import com.harshild.gradle.plugin.models.xml.generate.Dependencies
-import com.harshild.gradle.plugin.models.xml.generate.Dependency
-import com.harshild.gradle.plugin.models.xml.parse.ProjectLicense
-import com.harshild.gradle.plugin.models.xml.parse.ProjectLicenses
-import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
+import com.harshild.gradle.plugin.models.pom.generate.Dependencies
+import com.harshild.gradle.plugin.models.pom.generate.Dependency
+import com.harshild.gradle.plugin.models.pom.parse.ProjectLicense
+import com.harshild.gradle.plugin.models.pom.parse.ProjectLicenses
+import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
 import org.junit.Test
-
-import java.util.Arrays
 
 import static org.junit.Assert.assertEquals
 

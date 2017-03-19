@@ -1,8 +1,8 @@
-package com.harshild.gradle.plugin.models.xml.marshaller
+package com.harshild.gradle.plugin.models.pom.marshaller
 
-import com.harshild.gradle.plugin.models.xml.generate.Dependencies
-import com.harshild.gradle.plugin.models.xml.generate.Dependency
-import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
+import com.harshild.gradle.plugin.models.pom.generate.Dependencies
+import com.harshild.gradle.plugin.models.pom.generate.Dependency
+import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
 
 /**
  * Created by harshild on 2/10/2017.

@@ -1,17 +1,12 @@
 package com.harshild.gradle.plugin.pom
 
 import com.harshild.GradleTestHelper
-import com.harshild.gradle.plugin.models.xml.parse.ProjectParent
-import com.harshild.gradle.plugin.pom.PomFileManager
+import com.harshild.gradle.plugin.models.pom.parse.ProjectParent
 import org.gradle.api.Project
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-
-import java.io.File
-import java.io.IOException
-import java.util.Map
 
 import static org.junit.Assert.assertTrue
 

@@ -1,8 +1,8 @@
 package com.harshild.gradle.plugin.pom
 
-import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
+import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
 import com.harshild.gradle.plugin.utils.DependencyDataFormatterUtil
-import com.harshild.gradle.plugin.xml.parser.XMLParser
+import com.harshild.gradle.plugin.fileHandler.reader.XMLParser
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedArtifact
 

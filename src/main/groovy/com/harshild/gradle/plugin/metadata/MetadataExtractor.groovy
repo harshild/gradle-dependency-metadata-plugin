@@ -1,10 +1,9 @@
 package com.harshild.gradle.plugin.metadata
 
 import com.harshild.gradle.plugin.dependency.DependencyManager
-import com.harshild.gradle.plugin.extension.ReportExtension
 import com.harshild.gradle.plugin.manifest.ManifestDataExtractor
-import com.harshild.gradle.plugin.models.xml.parse.ProjectLicense
-import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
+import com.harshild.gradle.plugin.models.pom.parse.ProjectLicense
+import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
 import com.harshild.gradle.plugin.pom.PomDataExtractor
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedArtifact

@@ -1,9 +1,9 @@
 package com.harshild.gradle.plugin.task
 
 import com.harshild.gradle.plugin.metadata.MetadataExtractor
-import com.harshild.gradle.plugin.models.xml.generate.Dependencies
-import com.harshild.gradle.plugin.models.xml.marshaller.Marshaller
-import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
+import com.harshild.gradle.plugin.models.pom.generate.Dependencies
+import com.harshild.gradle.plugin.models.pom.marshaller.Marshaller
+import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
 import com.harshild.gradle.plugin.fileHandler.writer.XMLWriter
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction

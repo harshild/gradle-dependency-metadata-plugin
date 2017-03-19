@@ -1,18 +1,12 @@
-package com.harshild.gradle.plugin.xml.parser
+package com.harshild.gradle.plugin.fileHandler.reader
 
 import com.harshild.GradleTestHelper
-import com.harshild.gradle.plugin.models.xml.parse.ProjectParent
-import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
+import com.harshild.gradle.plugin.models.pom.parse.ProjectParent
+import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-
-import java.io.File
-import java.io.IOException
-import java.util.HashMap
-import java.util.List
-import java.util.Map
 
 import static org.hamcrest.core.AnyOf.anyOf
 import static org.hamcrest.core.IsEqual.equalTo

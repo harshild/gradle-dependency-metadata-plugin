@@ -1,7 +1,7 @@
-package com.harshild.gradle.plugin.models.xml.parse;
+package com.harshild.gradle.plugin.models.pom.parse;
 
-import com.harshild.gradle.plugin.models.xml.generate.DependencyLicense;
-import com.harshild.gradle.plugin.models.xml.generate.DependencyLicenses;
+import com.harshild.gradle.plugin.models.pom.generate.DependencyLicense;
+import com.harshild.gradle.plugin.models.pom.generate.DependencyLicenses;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;

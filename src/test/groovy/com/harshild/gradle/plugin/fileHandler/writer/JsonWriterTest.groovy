@@ -1,17 +1,13 @@
 package com.harshild.gradle.plugin.fileHandler.writer
 
 import com.harshild.GradleTestHelper
-import com.harshild.gradle.plugin.models.xml.parse.ProjectLicense
-import com.harshild.gradle.plugin.models.xml.parse.ProjectLicenses
-import com.harshild.gradle.plugin.models.xml.parse.XmlRootProject
+import com.harshild.gradle.plugin.models.pom.parse.ProjectLicense
+import com.harshild.gradle.plugin.models.pom.parse.ProjectLicenses
+import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-
-import java.io.File
-import java.io.IOException
-import java.util.Arrays
 
 import static junit.framework.TestCase.assertTrue
 

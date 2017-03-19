@@ -1,4 +1,4 @@
-package com.harshild.gradle.plugin.xml.parser
+package com.harshild.gradle.plugin.fileHandler.reader
 
 import org.xml.sax.InputSource
 import org.xml.sax.XMLReader

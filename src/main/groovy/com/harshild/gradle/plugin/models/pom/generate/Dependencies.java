@@ -1,4 +1,4 @@
-package com.harshild.gradle.plugin.models.xml.generate;
+package com.harshild.gradle.plugin.models.pom.generate;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
