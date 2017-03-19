@@ -2,7 +2,7 @@ package com.harshild.gradle.plugin.pom
 
 import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
 import com.harshild.gradle.plugin.utils.DependencyDataFormatterUtil
-import com.harshild.gradle.plugin.fileHandler.reader.XMLParser
+import com.harshild.gradle.plugin.fileio.reader.XMLParser
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedArtifact
 

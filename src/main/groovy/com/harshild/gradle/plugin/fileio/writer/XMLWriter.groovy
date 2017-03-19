@@ -1,6 +1,6 @@
-package com.harshild.gradle.plugin.fileHandler.writer
+package com.harshild.gradle.plugin.fileio.writer
 
-import com.harshild.gradle.plugin.fileHandler.FileWriter
+import com.harshild.gradle.plugin.fileio.FileWriter
 
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.Marshaller

@@ -1,4 +1,4 @@
-package com.harshild.gradle.plugin.fileHandler
+package com.harshild.gradle.plugin.fileio
 
 /**
  * Created by harshild on 18/03/17.

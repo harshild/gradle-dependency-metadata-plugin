@@ -1,4 +1,4 @@
-package com.harshild.gradle.plugin.fileHandler.reader
+package com.harshild.gradle.plugin.fileio.reader
 
 import com.harshild.GradleTestHelper
 import com.harshild.gradle.plugin.models.pom.parse.ProjectParent

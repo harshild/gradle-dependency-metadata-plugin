@@ -4,7 +4,7 @@ import com.harshild.gradle.plugin.metadata.MetadataExtractor
 import com.harshild.gradle.plugin.models.pom.generate.Dependencies
 import com.harshild.gradle.plugin.models.pom.marshaller.Marshaller
 import com.harshild.gradle.plugin.models.pom.parse.XmlRootProject
-import com.harshild.gradle.plugin.fileHandler.writer.XMLWriter
+import com.harshild.gradle.plugin.fileio.writer.XMLWriter
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 

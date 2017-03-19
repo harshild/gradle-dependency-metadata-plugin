@@ -1,4 +1,4 @@
-package com.harshild.gradle.plugin.fileHandler.reader;
+package com.harshild.gradle.plugin.fileio.reader;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
