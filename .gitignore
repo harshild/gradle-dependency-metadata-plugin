@@ -3,3 +3,5 @@
 *.iml
 gradle.properties
 build/
+*.ipr
+*.iws
