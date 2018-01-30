@@ -61,6 +61,7 @@ report{
 |  Configuration | Description | Possible Values |Default Value| 
 |---|---|---|---|
 |includeManifestData |includes or excludes usage of Manifest.MF for metadata information | true / false | true |
+|outputFormat | set the output format | xml / json | xml |
 
 ****
 

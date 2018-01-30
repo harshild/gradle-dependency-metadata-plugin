@@ -5,4 +5,5 @@ package com.harshild.gradle.plugin.extension
  */
 class ReportExtension {
     boolean includeManifestData = true
+    String outputFormat = 'xml'
 }

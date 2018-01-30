@@ -54,4 +54,16 @@ class ReportExtensionTest {
         assertEquals(result.task(":build").getOutcome(), SUCCESS)
     }
 
+    @Test
+    void reportExtensionWithOutputFormatWorksWithPlugin() throws IOException {
+        String compileDep =  buildFileContent + "\n"+
+                "report {\n" +
+                "outputFormat 'json'\n" +
+                "\n}"
+        GradleTestHelper.writeFile(buildFile, compileDep)
+
+        BuildResult result = GradleTestHelper.executeBuild(testProjectDir,"build")
+        assertEquals(result.task(":build").getOutcome(), SUCCESS)
+    }
+
 }
